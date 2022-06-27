@@ -1,0 +1,17 @@
+// media breakpoints
+$breakpoints: (
+  'xs': 36em,
+  'sm': 48em,
+  'md': 62em,
+  'lg': 75em,
+  'xl': 87.5em,
+) !default;
+
+@mixin breakpoint($breakpoint) {
+  @if map-has-key($breakpoints, $breakpoint) {
+    @media screen and (max-width: map-get($breakpoints, $breakpoint)) {
+      @content;
+    }
+  }
+} // ornek kullanim: @include breakpoint(sm) {}
+// cikti ==> media screen and (max-width:768px) {...}

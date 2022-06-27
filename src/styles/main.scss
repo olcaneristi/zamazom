@@ -1,0 +1,19 @@
+@import './globals/';
+@import './components/';
+@import './pages/';
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: $font-default;
+}
+
+body {
+  background-color: #f5f5f5;
+}
+
+.container {
+  max-width: $container-max-width;
+  margin: 0 auto;
+}
