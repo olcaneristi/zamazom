@@ -1,3 +1,4 @@
+import ProductCard from 'components/ProductCard';
 import React from 'react';
 import { useGetAllProductsQuery } from 'store/productsApi';
 
@@ -9,16 +10,13 @@ const Home = () => {
         {isLoading && <h2>Loading...</h2>}
         {error && <h2>Error: {error}</h2>}
         {data && (
-          <ul className="home__list">
-            {data.map(product => (
-              <li key={product.id} className="home__item">
-                <img src={product.image} alt={product.name} width={300} height={300} />
-                <h3>{product.name}</h3>
-                <p>{product.description}</p>
-                <p>{product.price}$</p>
-              </li>
-            ))}
-          </ul>
+          <div className="home__product__container">
+            <ul className="home__product__list">
+              {data.map(product => (
+                <ProductCard data={product} key={product.id} />
+              ))}
+            </ul>
+          </div>
         )}
       </div>
     </section>
