@@ -1,8 +1,13 @@
 import Logo from 'assets/icons/Logo';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import IconCart from 'assets/icons/IconCart';
+import IconFavorites from 'assets/icons/IconFavorites';
 
 const Header = () => {
+  const data = useSelector(state => state.cart);
+  console.log(data);
   return (
     <header className="header">
       <div className="container header__container">
@@ -11,12 +16,22 @@ const Header = () => {
             <Logo width="150" />
           </Link>
         </div>
-        <div className="header__cart">
-          <Link to="/cart" className="header__cart__items">
-            <span className="header__cart__count">5</span>
-            <span className="header__cart__title">Your Cart</span>
+        <nav className="header__nav">
+          <Link to="/favorites" className="header__favorites">
+            <IconFavorites color="#FFF" width="32" height="32" />
+            <span className="header__favorites__title">Favorites</span>
           </Link>
-        </div>
+          <Link to="/cart" className="header__cart">
+            <IconCart width="30" height="30" />
+            <span className="header__cart__count">{data?.cartItems?.length}</span>
+            <span className="header__cart__total">
+              {data?.cartTotalAmount.toLocaleString('en-US', {
+                style: 'currency',
+                currency: 'USD',
+              })}
+            </span>
+          </Link>
+        </nav>
       </div>
     </header>
   );
