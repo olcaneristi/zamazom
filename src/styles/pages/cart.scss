@@ -1,1 +1,40 @@
-//
+.cart {
+  padding: 0.5rem 1rem;
+
+  &__container {
+    display: flex;
+  }
+  &__items {
+    border: 1px solid black;
+    border-radius: 8px;
+    width: calc(66.66% - 1rem);
+    padding: 1rem;
+    margin-right: 1rem;
+  }
+
+  &__list {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    &__left {
+      display: flex;
+    }
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__checkout {
+    border: 1px solid black;
+    border-radius: 8px;
+    width: calc(33.33% - 1rem);
+    margin-left: 1rem;
+
+    &__total {
+      position: sticky;
+    }
+  }
+}
