@@ -1,21 +1,42 @@
 .cart {
   padding: 0.5rem 1rem;
 
+  &__info {
+    justify-content: space-between;
+    display: flex;
+    align-items: center;
+    margin-block: 1rem;
+    width: calc(66.66% - 1rem);
+    padding-inline: 1rem;
+  }
+
   &__container {
     display: flex;
   }
   &__items {
-    border: 1px solid black;
     border-radius: 8px;
     width: calc(66.66% - 1rem);
     padding: 1rem;
     margin-right: 1rem;
+    box-shadow: 0 1px 2px 1px #00000026;
+    margin-bottom: 2rem;
   }
 
   &__list {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
+    padding-block: 1.25rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.14);
+
+    &:nth-child(1) {
+      padding-top: 0;
+    }
+
+    &:nth-last-child(1) {
+      border-bottom: 0;
+      padding-bottom: 0;
+    }
 
     &__left {
       display: flex;
@@ -25,16 +46,81 @@
   &__content {
     display: flex;
     flex-direction: column;
+    margin-left: 1rem;
+
+    &__name {
+      margin-bottom: 0.5rem;
+
+      & > a {
+        font-size: 1rem;
+        color: black;
+      }
+    }
+
+    &__desc {
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+      opacity: 0.55;
+    }
+
+    &__quantity {
+      font-size: 0.75rem;
+      color: rgb(113, 113, 119);
+    }
   }
 
   &__checkout {
-    border: 1px solid black;
-    border-radius: 8px;
     width: calc(33.33% - 1rem);
     margin-left: 1rem;
 
-    &__total {
+    &__container {
+      border-radius: 8px;
+      box-shadow: 0 1px 2px 1px #00000026;
       position: sticky;
+      top: 100px;
+      padding-inline: 1rem;
+    }
+
+    &__continue {
+      padding-block: 1.5rem;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.14);
+    }
+
+    &__summary {
+      padding-block: 1.5rem;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.14);
+
+      &--subtotal,
+      &--taxes {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      &--subtotal {
+        margin-bottom: 1rem;
+      }
+    }
+
+    &__button {
+      background-color: #0071dc;
+      width: 100%;
+      cursor: pointer;
+      border-radius: 0.5rem;
+      height: 2.75rem;
+      padding: 0 1.5rem;
+      color: #fff;
+      font-size: 0.85rem;
+      letter-spacing: 0.25px;
+      font-weight: 700;
+    }
+
+    &__estimated__total {
+      padding-block: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
   }
 }

@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 
 const Cart = () => {
   const state = useSelector(state => state.cart);
+  console.log(state);
   return (
     <section className="cart">
       <div className="container">
@@ -14,7 +15,10 @@ const Cart = () => {
           </div>
         )) || (
           <>
-            <h2>Your Cart</h2>
+            <div className="cart__info">
+              <h2>Your Cart</h2>
+              <span>{state?.cartItems?.length} items</span>
+            </div>
             <div className="cart__container">
               <div className="cart__items">
                 <ul>
@@ -30,18 +34,11 @@ const Cart = () => {
                           <div className="cart__content__name">
                             <Link to={`/products/${item.slug}`}>{item.name}</Link>
                           </div>
-                          <p>{item.description}</p>
+                          <p className="cart__content__desc">{item.description}</p>
+                          <p className="cart__content__quantity">Quantity: {item.quantity}</p>
                         </div>
                       </div>
                       <div className="home__product__price">
-                        <div className="home__product__price--sale">
-                          <span className="home__product__price--sale-text-normal">
-                            {item.isPriceRange.toLocaleString('en-US', {
-                              style: 'currency',
-                              currency: 'USD',
-                            })}
-                          </span>
-                        </div>
                         <div className="home__product__price--regular">
                           {item.wasPriceRange !== item.isPriceRange && (
                             <span className="home__product__price--regular-text">
@@ -52,13 +49,52 @@ const Cart = () => {
                             </span>
                           )}
                         </div>
+
+                        <div className="home__product__price--sale">
+                          <span className="home__product__price--sale-text-normal">
+                            {item.isPriceRange.toLocaleString('en-US', {
+                              style: 'currency',
+                              currency: 'USD',
+                            })}
+                          </span>
+                        </div>
                       </div>
                     </li>
                   ))}
                 </ul>
               </div>
               <div className="cart__checkout">
-                <div className="cart__checkout__total">Toplam</div>
+                <div className="cart__checkout__container">
+                  <div className="cart__checkout__continue">
+                    <button type="submit" className="cart__checkout__button">
+                      Continue to checkout
+                    </button>
+                  </div>
+                  <div className="cart__checkout__summary">
+                    <div className="cart__checkout__summary--subtotal">
+                      <span>Subtotal ({state?.cartItems?.length} items)</span>
+                      <span>
+                        {state?.cartTotalAmount.toLocaleString('en-US', {
+                          style: 'currency',
+                          currency: 'USD',
+                        })}
+                      </span>
+                    </div>
+                    <div className="cart__checkout__summary--taxes">
+                      <span>Taxes</span>
+                      <span>Calculated at checkout</span>
+                    </div>
+                  </div>
+                  <div className="cart__checkout__estimated__total">
+                    <span>Estimated total</span>
+                    <span>
+                      {state?.cartTotalAmount.toLocaleString('en-US', {
+                        style: 'currency',
+                        currency: 'USD',
+                      })}
+                    </span>
+                  </div>
+                </div>
               </div>
             </div>
           </>
