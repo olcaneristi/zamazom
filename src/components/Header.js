@@ -6,8 +6,7 @@ import IconCart from 'assets/icons/IconCart';
 import IconFavorites from 'assets/icons/IconFavorites';
 
 const Header = () => {
-  const data = useSelector(state => state.cart);
-  console.log(data);
+  const { cartTotalAmount, cartItems } = useSelector(state => state.cart);
   return (
     <header className="header">
       <div className="container header__container">
@@ -23,9 +22,9 @@ const Header = () => {
           </Link>
           <Link to="/cart" className="header__cart">
             <IconCart width="30" height="30" />
-            <span className="header__cart__count">{data?.cartItems?.length}</span>
+            <span className="header__cart__count">{cartItems.length}</span>
             <span className="header__cart__total">
-              {data?.cartTotalAmount.toLocaleString('en-US', {
+              {cartTotalAmount.toLocaleString('en-US', {
                 style: 'currency',
                 currency: 'USD',
               })}
