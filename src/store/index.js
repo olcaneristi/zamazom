@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import logger from 'redux-logger';
-import cartReducer from './cartSlice';
+import cartReducer, { getCartTotal } from './cartSlice';
 import favoritesReducer from './favoriteSlice';
 import { productsApi } from './productsApi';
 import productReducer, { getProducts } from './productSlice';
@@ -16,3 +16,4 @@ export const store = configureStore({
 });
 
 store?.dispatch(getProducts());
+store?.dispatch(getCartTotal());
