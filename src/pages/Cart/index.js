@@ -1,10 +1,30 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import IconMinus from 'assets/icons/IconMinus';
+import IconPlus from 'assets/icons/IconPlus';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { addToCart, decreaseCartItem, getCartTotal, removeFromCart } from 'store/cartSlice';
 
 const Cart = () => {
   const state = useSelector(state => state.cart);
-  console.log(state);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getCartTotal());
+  }, [state, dispatch]);
+
+  const handleRemoveFromCart = item => {
+    dispatch(removeFromCart(item));
+  };
+
+  const handleIncreaseQuantity = item => {
+    dispatch(addToCart(item));
+  };
+
+  const handleDecreaseQuantity = item => {
+    dispatch(decreaseCartItem(item));
+  };
+
   return (
     <section className="cart">
       <div className="container">
@@ -23,41 +43,63 @@ const Cart = () => {
               <div className="cart__items">
                 <ul>
                   {state?.cartItems?.map(item => (
-                    <li key={item.id} className="cart__list">
-                      <div className="cart__list__left">
-                        <div className="cart__img">
+                    <li key={item.id} className="cart__items__list">
+                      <div className="cart__items__list--left">
+                        <div className="cart__items__list__img">
                           <Link to={`/products/${item.slug}`}>
                             <img src={item.image} alt={item.name} width="100" height="100" />
                           </Link>
                         </div>
-                        <div className="cart__content">
-                          <div className="cart__content__name">
+                        <div className="cart__items__list__content">
+                          <div className="cart__items__list__content__name">
                             <Link to={`/products/${item.slug}`}>{item.name}</Link>
                           </div>
-                          <p className="cart__content__desc">{item.description}</p>
-                          <p className="cart__content__quantity">Quantity: {item.quantity}</p>
+                          <p className="cart__items__list__content__desc">{item.description}</p>
+                          <div className="home__product__price">
+                            <div className="home__product__price--regular">
+                              {item.wasPriceRange !== item.isPriceRange && (
+                                <span className="home__product__price--regular-text">
+                                  {item.wasPriceRange.toLocaleString('en-US', {
+                                    style: 'currency',
+                                    currency: 'USD',
+                                  })}
+                                </span>
+                              )}
+                            </div>
+
+                            <div className="home__product__price--sale">
+                              <span className="home__product__price--sale-text-normal">
+                                {item.isPriceRange.toLocaleString('en-US', {
+                                  style: 'currency',
+                                  currency: 'USD',
+                                })}
+                              </span>
+                            </div>
+                          </div>
+
+                          <button
+                            className="cart__items__list__content__remove"
+                            onClick={() => handleRemoveFromCart(item)}
+                          >
+                            Remove
+                          </button>
                         </div>
                       </div>
-                      <div className="home__product__price">
-                        <div className="home__product__price--regular">
-                          {item.wasPriceRange !== item.isPriceRange && (
-                            <span className="home__product__price--regular-text">
-                              {item.wasPriceRange.toLocaleString('en-US', {
-                                style: 'currency',
-                                currency: 'USD',
-                              })}
-                            </span>
-                          )}
-                        </div>
 
-                        <div className="home__product__price--sale">
-                          <span className="home__product__price--sale-text-normal">
-                            {item.isPriceRange.toLocaleString('en-US', {
-                              style: 'currency',
-                              currency: 'USD',
-                            })}
-                          </span>
-                        </div>
+                      <div className="cart__items__list__quantity">
+                        <button
+                          className="cart__items__list__quantity--increase"
+                          onClick={() => handleIncreaseQuantity(item)}
+                        >
+                          <IconPlus />
+                        </button>
+                        <input type="number" value={item.quantity} readOnly />
+                        <button
+                          className="cart__items__list__quantity--decrease"
+                          onClick={() => handleDecreaseQuantity(item)}
+                        >
+                          <IconMinus />
+                        </button>
                       </div>
                     </li>
                   ))}
