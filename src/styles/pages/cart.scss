@@ -20,52 +20,81 @@
     margin-right: 1rem;
     box-shadow: 0 1px 2px 1px #00000026;
     margin-bottom: 2rem;
-  }
 
-  &__list {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    padding-block: 1.25rem;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.14);
-
-    &:nth-child(1) {
-      padding-top: 0;
-    }
-
-    &:nth-last-child(1) {
-      border-bottom: 0;
-      padding-bottom: 0;
-    }
-
-    &__left {
+    &__list {
       display: flex;
-    }
-  }
+      align-items: flex-start;
+      padding-block: 1.25rem;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.14);
 
-  &__content {
-    display: flex;
-    flex-direction: column;
-    margin-left: 1rem;
-
-    &__name {
-      margin-bottom: 0.5rem;
-
-      & > a {
-        font-size: 1rem;
-        color: black;
+      &:nth-child(1) {
+        padding-top: 0;
       }
-    }
 
-    &__desc {
-      margin-bottom: 1rem;
-      font-size: 0.9rem;
-      opacity: 0.55;
-    }
+      &:nth-last-child(1) {
+        border-bottom: 0;
+        padding-bottom: 0;
+      }
 
-    &__quantity {
-      font-size: 0.75rem;
-      color: rgb(113, 113, 119);
+      &--left {
+        display: flex;
+        flex: 1;
+      }
+
+      &__quantity {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: flex-end;
+
+        & > input[type='number'] {
+          width: 34px;
+          height: 1.5rem;
+          text-align: center;
+          font-weight: 700;
+          margin-block: 0.3rem;
+          line-height: 1.5;
+          outline: none;
+        }
+
+        &--increase,
+        &--decrease {
+          border: none;
+          background-color: transparent;
+          cursor: pointer;
+          display: flex;
+
+          &:hover {
+            & > svg {
+              fill: #0071dc;
+
+              & > path {
+                stroke: #fff;
+              }
+            }
+          }
+        }
+      }
+
+      &__content {
+        display: flex;
+        flex-direction: column;
+        margin-left: 1.5rem;
+
+        &__name {
+          margin-bottom: 0.5rem;
+
+          & > a {
+            font-size: 1rem;
+            color: black;
+          }
+        }
+
+        &__desc {
+          font-size: 0.8rem;
+          opacity: 0.55;
+        }
+      }
     }
   }
 
