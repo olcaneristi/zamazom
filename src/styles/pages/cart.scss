@@ -94,6 +94,16 @@
           font-size: 0.8rem;
           opacity: 0.55;
         }
+
+        &__remove {
+          background-color: transparent;
+          border: none;
+          cursor: pointer;
+          text-align: left;
+          width: fit-content;
+          color: rgb(183, 183, 183);
+          text-decoration: underline;
+        }
       }
     }
   }
