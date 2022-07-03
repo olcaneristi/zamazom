@@ -15,7 +15,7 @@ const cartSlice = createSlice({
     addToCart(state, action) {
       const cartItem = state.cartItems.find(item => item.id === action.payload.id);
 
-      if (cartItem) {
+      if (cartItem && cartItem.color === action.payload.color) {
         cartItem.quantity += 1;
       } else {
         state.cartItems.push({
