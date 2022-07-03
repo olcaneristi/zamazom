@@ -11,7 +11,7 @@ function App() {
       <Header />
       <Switch>
         <Route exact path="/" component={Home} />
-        <Route path="/products/:slug" component={ItemDetails} />
+        <Route exact path="/products/:slug" component={ItemDetails} />
         <Route path="/cart" component={Cart} />
         <Route path="/favorites" component={Favorites} />
         <Route path="*" component={NotFound} />
