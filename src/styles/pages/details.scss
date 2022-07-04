@@ -3,7 +3,7 @@
   &__container {
     display: flex;
     align-items: flex-start;
-    justify-content: center;
+    justify-content: space-between;
     box-shadow: 0 1px 2px 1px #00000026;
     border-radius: 8px;
 
@@ -15,9 +15,6 @@
   &__image {
     width: calc(55% - 20px);
     overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     padding: 1rem;
     border-right: 0.5px solid #acacac;
 
@@ -31,7 +28,7 @@
   }
 
   &__content {
-    width: calc(45% - 20px);
+    width: calc(50% - 20px);
     margin-inline: 10px;
     padding: 1.5rem;
 
@@ -143,6 +140,15 @@
       font-size: 0.85rem;
       letter-spacing: 0.25px;
       font-weight: 700;
+
+      &:disabled {
+        border: 1px solid gray;
+        cursor: not-allowed;
+
+        & > svg path {
+          stroke: gray !important;
+        }
+      }
 
       & > svg {
         display: flex;
