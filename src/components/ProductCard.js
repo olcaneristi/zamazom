@@ -4,16 +4,14 @@ import StarRating from 'react-svg-star-rating';
 import { useDispatch } from 'react-redux';
 import { addToCart } from 'store/cartSlice';
 import CustomModal from './CustomModal';
+import { motion } from 'framer-motion';
+import { motionContainer, motionItem } from 'helper';
 
 const ProductCard = ({ data }) => {
   const [isShown, setIsShown] = useState(false);
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedProduct, setSelectedProduct] = useState('');
-
-  const toggleModal = () => {
-    setIsOpen(!isOpen);
-  };
+  const [selectedProduct, setSelectedProduct] = useState([]);
 
   const handleSelectProduct = item => {
     setSelectedProduct(item);
@@ -29,13 +27,22 @@ const ProductCard = ({ data }) => {
 
   const openSelectProductModal = data => {
     return (
-      <CustomModal isOpen={isOpen} onRequestClose={toggleModal}>
+      <CustomModal isOpen={isOpen} onRequestClose={() => setIsOpen(false)}>
         <div className="home__product__variant__container">
           <h3 className="home__product__variant__title">Color</h3>
-          <ul className="home__product__variant__list">
+          <motion.ul
+            className="home__product__variant__list motionContainer"
+            variants={motionContainer}
+            initial="hidden"
+            animate="visible"
+          >
             {data &&
               data.variantList.map((item, index) => (
-                <li key={index} className="home__product__variant__item">
+                <motion.li
+                  key={index}
+                  className="home__product__variant__item motionItem"
+                  variants={motionItem}
+                >
                   <button
                     className="home__product__variant__button"
                     onClick={() => handleSelectProduct(item)}
@@ -46,12 +53,12 @@ const ProductCard = ({ data }) => {
                           : '1.5px solid rgb(216, 208, 208)',
                     }}
                   >
-                    <img src={data.image} alt={data.name} width="80px" />
+                    <img src={data.coverImage} alt={data.name} width="80px" />
                   </button>
                   <p className="home__product__variant__color">{item.color.name}</p>
-                </li>
+                </motion.li>
               ))}
-          </ul>
+          </motion.ul>
         </div>
 
         <div className="home__product__variant__summary">
@@ -63,7 +70,7 @@ const ProductCard = ({ data }) => {
           </span>
 
           <button
-            disabled={!selectedProduct}
+            disabled={!selectedProduct.id}
             className="home__product__variant__summary--btn"
             onClick={() => handleAddToCartAndCloseModal(selectedProduct)}
           >
@@ -82,7 +89,7 @@ const ProductCard = ({ data }) => {
     >
       <Link className="home__product__element" to={`/products/${data?.slug}`}>
         <div className="home__product__img">
-          <img src={data?.image} alt={data?.name} width="100%" />
+          <img src={data?.coverImage} alt={data?.name} width="100%" />
         </div>
         <div className="home__product__content">
           <div className="home__product__text">
@@ -131,7 +138,11 @@ const ProductCard = ({ data }) => {
 
       {isShown && (
         <div className="home__product__add-to-cart">
-          <button type="button" onClick={toggleModal} className="home__product__add-to-cart-btn">
+          <button
+            type="button"
+            onClick={() => setIsOpen(true)}
+            className="home__product__add-to-cart-btn"
+          >
             Add to Cart
           </button>
         </div>

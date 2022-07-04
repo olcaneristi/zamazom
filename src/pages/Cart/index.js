@@ -4,6 +4,9 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { addToCart, decreaseCartItem, getCartTotal, removeFromCart } from 'store/cartSlice';
+import AnimatedPage from 'components/AnimatedPage';
+import { motionContainer, motionItem } from 'helper';
+import { motion } from 'framer-motion';
 
 const Cart = () => {
   const state = useSelector(state => state.cart);
@@ -27,7 +30,7 @@ const Cart = () => {
 
   return (
     <section className="cart">
-      <div className="container">
+      <AnimatedPage className="container">
         {(state?.cartItems.length === 0 && (
           <div className="cart__empty">
             <h2>Your card is empty.</h2>
@@ -41,13 +44,18 @@ const Cart = () => {
             </div>
             <div className="cart__container">
               <div className="cart__items">
-                <ul>
+                <motion.ul variants={motionContainer} initial="hidden" animate="visible">
                   {state?.cartItems?.map(item => (
-                    <li key={item.id} className="cart__items__list">
+                    <motion.li
+                      key={item.id}
+                      className="cart__items__list item"
+                      variants={motionItem}
+                      transition={{ duration: 0.5 }}
+                    >
                       <div className="cart__items__list--left">
                         <div className="cart__items__list__img">
                           <Link to={`/products/${item.slug}`}>
-                            <img src={item.image} alt={item.name} width="100" height="100" />
+                            <img src={item.coverImage} alt={item.name} width="100" height="100" />
                           </Link>
                         </div>
                         <div className="cart__items__list__content">
@@ -55,7 +63,7 @@ const Cart = () => {
                             <Link to={`/products/${item.slug}`}>{item.name}</Link>
                           </div>
                           <p className="cart__items__list__content__desc">{item.description}</p>
-                          <p>Color: {item.color.name}</p>
+                          {item?.color && <p>Color: {item.color.name}</p>}
                           <div className="home__product__price">
                             <div className="home__product__price--regular">
                               {item.wasPriceRange !== item.isPriceRange && (
@@ -101,9 +109,9 @@ const Cart = () => {
                           <IconMinus />
                         </button>
                       </div>
-                    </li>
+                    </motion.li>
                   ))}
-                </ul>
+                </motion.ul>
               </div>
               <div className="cart__checkout">
                 <div className="cart__checkout__container">
@@ -141,7 +149,7 @@ const Cart = () => {
             </div>
           </>
         )}
-      </div>
+      </AnimatedPage>
     </section>
   );
 };

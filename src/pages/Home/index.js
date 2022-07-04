@@ -1,12 +1,13 @@
 import ProductCard from 'components/ProductCard';
 import React from 'react';
 import { useGetAllProductsQuery } from 'store/productsApi';
+import AnimatedPage from 'components/AnimatedPage';
 
 const Home = () => {
   const { data, error, isLoading } = useGetAllProductsQuery();
   return (
     <section className="home">
-      <div className="container home__container">
+      <AnimatedPage className="container home__container">
         {isLoading && <h2>Loading...</h2>}
         {error && <h2>Error: {error}</h2>}
         {data && (
@@ -18,7 +19,7 @@ const Home = () => {
             </ul>
           </div>
         )}
-      </div>
+      </AnimatedPage>
     </section>
   );
 };
