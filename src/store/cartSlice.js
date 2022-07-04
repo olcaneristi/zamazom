@@ -22,17 +22,17 @@ const cartSlice = createSlice({
           ...action.payload,
           quantity: 1,
         });
-
-        toast.success('Added to your cart successfully!', {
-          position: 'top-right',
-          style: {
-            minWidth: 210,
-            minHeight: 65,
-            boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.4)',
-            fontSize: 17,
-          },
-        });
       }
+      toast.success('Added to your cart successfully!', {
+        position: 'top-right',
+        style: {
+          minWidth: 210,
+          minHeight: 65,
+          boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.4)',
+          fontSize: 17,
+        },
+      });
+
       state.cartTotalQuantity += 1;
       state.cartTotalAmount += action.payload.isPriceRange;
 
