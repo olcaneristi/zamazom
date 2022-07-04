@@ -3,13 +3,75 @@ import { Link } from 'react-router-dom';
 import StarRating from 'react-svg-star-rating';
 import { useDispatch } from 'react-redux';
 import { addToCart } from 'store/cartSlice';
+import CustomModal from './CustomModal';
 
 const ProductCard = ({ data }) => {
   const [isShown, setIsShown] = useState(false);
   const dispatch = useDispatch();
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState('');
 
-  const handleAddToCart = data => {
-    dispatch(addToCart(data));
+  const toggleModal = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const handleSelectProduct = item => {
+    setSelectedProduct(item);
+  };
+
+  const handleAddToCartAndCloseModal = item => {
+    dispatch(addToCart(item));
+
+    setTimeout(() => {
+      setIsOpen(false);
+    }, 600);
+  };
+
+  const openSelectProductModal = data => {
+    return (
+      <CustomModal isOpen={isOpen} onRequestClose={toggleModal}>
+        <div className="home__product__variant__container">
+          <h3 className="home__product__variant__title">Color</h3>
+          <ul className="home__product__variant__list">
+            {data &&
+              data.variantList.map((item, index) => (
+                <li key={index} className="home__product__variant__item">
+                  <button
+                    className="home__product__variant__button"
+                    onClick={() => handleSelectProduct(item)}
+                    style={{
+                      border:
+                        selectedProduct.id === item.id
+                          ? '1.5px solid black'
+                          : '1.5px solid rgb(216, 208, 208)',
+                    }}
+                  >
+                    <img src={data.image} alt={data.name} width="80px" />
+                  </button>
+                  <p className="home__product__variant__color">{item.color.name}</p>
+                </li>
+              ))}
+          </ul>
+        </div>
+
+        <div className="home__product__variant__summary">
+          <span className="home__product__variant__summary--price">
+            {data.isPriceRange.toLocaleString('en-US', {
+              style: 'currency',
+              currency: 'USD',
+            })}
+          </span>
+
+          <button
+            disabled={!selectedProduct}
+            className="home__product__variant__summary--btn"
+            onClick={() => handleAddToCartAndCloseModal(selectedProduct)}
+          >
+            Add to cart
+          </button>
+        </div>
+      </CustomModal>
+    );
   };
 
   return (
@@ -69,15 +131,13 @@ const ProductCard = ({ data }) => {
 
       {isShown && (
         <div className="home__product__add-to-cart">
-          <button
-            type="button"
-            onClick={() => handleAddToCart(data)}
-            className="home__product__add-to-cart-btn"
-          >
+          <button type="button" onClick={toggleModal} className="home__product__add-to-cart-btn">
             Add to Cart
           </button>
         </div>
       )}
+
+      {openSelectProductModal(data)}
     </li>
   );
 };
