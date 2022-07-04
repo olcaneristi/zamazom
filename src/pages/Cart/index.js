@@ -55,7 +55,7 @@ const Cart = () => {
                             <Link to={`/products/${item.slug}`}>{item.name}</Link>
                           </div>
                           <p className="cart__items__list__content__desc">{item.description}</p>
-                          {item.color && <p>Color: {item.color.name}</p>}
+                          <p>Color: {item.color.name}</p>
                           <div className="home__product__price">
                             <div className="home__product__price--regular">
                               {item.wasPriceRange !== item.isPriceRange && (
@@ -77,7 +77,6 @@ const Cart = () => {
                               </span>
                             </div>
                           </div>
-
                           <button
                             className="cart__items__list__content__remove"
                             onClick={() => handleRemoveFromCart(item)}
