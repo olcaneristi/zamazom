@@ -1,0 +1,40 @@
+.my__swiper {
+  &__top {
+    height: 80%;
+    width: 100%;
+    margin-bottom: 2rem;
+  }
+
+  &__bottom {
+    max-width: 550px;
+    height: 20%;
+
+    & > .swiper-wrapper {
+      justify-content: center;
+    }
+
+    img {
+      width: 45% !important;
+    }
+  }
+}
+
+.swiper-slide-visible {
+  padding: 0.75rem 0;
+  border: 1.5px solid transparent;
+  cursor: pointer;
+}
+
+.swiper-slide-thumb-active {
+  border: 1.5px solid #96acc1;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.swiper-slide img {
+  display: block;
+  width: 70%;
+  margin: 0 auto;
+  height: 70%;
+  object-fit: cover;
+}
