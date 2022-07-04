@@ -4,38 +4,18 @@ import StarRating from 'react-svg-star-rating';
 import { addToCart } from 'store/cartSlice';
 import { useGetProductByIdQuery } from 'store/productsApi';
 import IconFavorites from '../../assets/icons/IconFavorites';
-
-const productColors = [
-  {
-    id: 1,
-    name: 'Black',
-    hex: '#000000',
-    inStock: true,
-  },
-  {
-    id: 2,
-    name: 'White',
-    hex: '#ffffff',
-    inStock: true,
-  },
-  {
-    id: 3,
-    name: 'Red',
-    hex: '#ff0000',
-    inStock: true,
-  },
-  {
-    id: 4,
-    name: 'Midnight Blue',
-    hex: '#0000ff',
-    inStock: true,
-  },
-];
+import AnimatedPage from 'components/AnimatedPage';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { FreeMode, Navigation, Thumbs } from 'swiper';
+import { motion } from 'framer-motion';
+import { motionContainer, motionItem } from 'helper';
+import { addToFavorites } from 'store/favoriteSlice';
 
 const ItemDetails = ({ match }) => {
   const { slug } = match.params;
   const [itemDetail, setItemDetail] = useState([]);
-  const [selectedColor, setSelectedColor] = useState('');
+  const [selectedProduct, setSelectedProduct] = useState([]);
+  const [thumbsSwiper, setThumbsSwiper] = useState(null);
   const { data, loading, error } = useGetProductByIdQuery(slug);
   const dispatch = useDispatch();
 
@@ -43,15 +23,23 @@ const ItemDetails = ({ match }) => {
     setItemDetail(data);
   }, [slug, data]);
 
-  const handleSelectColor = item => {
-    setSelectedColor(item);
+  useEffect(() => {
+    selectedProduct === []
+      ? setSelectedProduct(selectedProduct)
+      : setSelectedProduct(itemDetail && itemDetail[0]?.variantList[0]);
+  }, [itemDetail]);
+
+  const handleSelectProduct = item => {
+    setSelectedProduct(item);
   };
 
-  const handleAddToCart = item => {
-    dispatch(addToCart({ ...item, color: selectedColor }));
+  const handleAddToCart = selectedProduct => {
+    dispatch(addToCart(selectedProduct));
   };
 
-  console.log('deneme', selectedColor);
+  const handleAddFavorites = selectedProduct => {
+    dispatch(addToFavorites(selectedProduct));
+  };
 
   return (
     <section className="details">
@@ -59,9 +47,40 @@ const ItemDetails = ({ match }) => {
       {error && <div>Error!</div>}
 
       {itemDetail?.map(item => (
-        <div className="container details__container" key={item?.id}>
+        <AnimatedPage className="container details__container" key={item?.id}>
           <div className="details__image">
-            <img src={item?.image} alt={item?.name} width="80%" />
+            <Swiper
+              style={{
+                '--swiper-navigation-color': '#000',
+                '--swiper-pagination-color': '#000',
+              }}
+              spaceBetween={10}
+              navigation={true}
+              thumbs={{ swiper: thumbsSwiper }}
+              modules={[FreeMode, Navigation, Thumbs]}
+              className="my__swiper__top"
+            >
+              {item?.images?.map((image, index) => (
+                <SwiperSlide key={index}>
+                  <img src={image} alt={item?.name} />
+                </SwiperSlide>
+              ))}
+            </Swiper>
+
+            <Swiper
+              onSwiper={setThumbsSwiper}
+              slidesPerView={6}
+              freeMode={true}
+              watchSlidesProgress={true}
+              modules={[FreeMode, Navigation, Thumbs]}
+              className="my__swiper__bottom"
+            >
+              {item?.images?.map((image, index) => (
+                <SwiperSlide key={index}>
+                  <img src={image} alt={item?.name} />
+                </SwiperSlide>
+              ))}
+            </Swiper>
           </div>
           <div className="details__content">
             <h1 className="details__content__title">{item?.name}</h1>
@@ -116,40 +135,51 @@ const ItemDetails = ({ match }) => {
             <div className="details__description">
               <p>{item?.description}</p>
             </div>
-
-            <div className="details__colors">
-              {productColors?.map(color => (
-                <button
-                  className="details__colors__item"
-                  key={color.id}
-                  onClick={() => handleSelectColor(color)}
-                  style={{
-                    backgroundColor: color.hex,
-                    width: 20,
-                    height: 20,
-                    borderRadius: '50%',
-                    border: '1px solid black',
-                    marginInline: 5,
-                    cursor: 'pointer',
-                  }}
-                />
+            <motion.ul
+              style={{ display: 'flex' }}
+              className="motionContainer"
+              variants={motionContainer}
+              initial="hidden"
+              animate="visible"
+            >
+              {item.variantList.map((variant, index) => (
+                <motion.li
+                  key={index}
+                  className="home__product__variant__item motionItem"
+                  variants={motionItem}
+                >
+                  <button
+                    className="home__product__variant__button"
+                    onClick={() => handleSelectProduct(variant)}
+                    style={{
+                      border:
+                        selectedProduct?.id === variant?.id
+                          ? '1.5px solid black'
+                          : '1.5px solid rgb(216, 208, 208)',
+                    }}
+                  >
+                    <img src={variant.coverImage} alt={variant.name} width="80px" />
+                  </button>
+                  <p className="home__product__variant__color">{variant.color.name}</p>
+                </motion.li>
               ))}
-            </div>
-
+            </motion.ul>
             <div className="details__btn">
               <button
                 className="details__btn--add-to-cart"
-                disabled={!selectedColor}
-                onClick={() => handleAddToCart(item)}
+                onClick={() => handleAddToCart(selectedProduct)}
               >
                 Add to Cart
               </button>
-              <button className="details__btn--add-favorites">
+              <button
+                className="details__btn--add-favorites"
+                onClick={() => handleAddFavorites(selectedProduct)}
+              >
                 <IconFavorites color="#0071dc" strokeWidth="3.5" width="32" height="32" />
               </button>
             </div>
           </div>
-        </div>
+        </AnimatedPage>
       ))}
     </section>
   );
