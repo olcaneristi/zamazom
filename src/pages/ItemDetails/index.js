@@ -54,7 +54,7 @@ const ItemDetails = ({ match }) => {
 
     setIsFavorite(isAlreadyFavorited);
 
-    if (isAlreadyFavorited) {
+    if (isFavorite) {
       dispatch(removeFromFavorites(selectedProduct));
     } else {
       dispatch(addToFavorites(selectedProduct));
