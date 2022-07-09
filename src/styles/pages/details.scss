@@ -1,11 +1,13 @@
 .details {
-  padding: 2rem;
+  padding-inline: 1rem;
+  max-width: $container-max-width + 40px !important;
   &__container {
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
     box-shadow: 0 1px 2px 1px #00000026;
     border-radius: 8px;
+    margin-top: 2rem;
 
     @include breakpoint(md) {
       flex-direction: column;
@@ -84,6 +86,7 @@
   &__rating {
     display: flex;
     align-items: center;
+    cursor: pointer;
     flex-direction: column;
 
     &__star {
@@ -154,5 +157,87 @@
         display: flex;
       }
     }
+  }
+
+  &__info {
+    box-shadow: 0 1px 2px 1px #00000026;
+    border-radius: 8px;
+    padding: 1rem;
+    margin: 3.5rem 0;
+
+    &__heading {
+      font-weight: 700;
+      font-size: 1.6rem;
+      padding-bottom: 2rem;
+      color: rgb(9, 35, 60);
+    }
+  }
+
+  &__specification {
+    padding-bottom: 3rem;
+    border-bottom: 0.25px solid #c1c1c1;
+
+    &__list {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      flex-wrap: wrap;
+
+      &__item {
+        margin-inline: 0.5rem;
+        margin-block: 1rem;
+        padding-block: 0.5rem;
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        flex-direction: column;
+        justify-content: space-between;
+        border-radius: 8px;
+        width: calc(100% / 6 - 20px);
+        min-height: 120px;
+        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+
+        @include breakpoint(md) {
+          width: calc(100% / 5 - 20px);
+        }
+
+        @include breakpoint(sm) {
+          width: calc(100% / 3.5 - 10px);
+        }
+
+        &--title {
+          min-height: 1.5rem;
+          text-align: center;
+          line-height: 1.2;
+          align-items: flex-start;
+          display: flex;
+          font-size: 0.8rem;
+          font-weight: 700;
+          color: #305c83;
+          text-transform: uppercase;
+          letter-spacing: -0.5px;
+        }
+
+        &--img {
+          width: 2.2rem;
+          height: 2.2rem;
+          object-fit: contain;
+        }
+
+        &--desc {
+          min-height: 1.5rem;
+          font-weight: 700;
+          font-size: 1rem;
+          letter-spacing: 0.5px;
+          text-align: center;
+          align-items: flex-end;
+          display: flex;
+        }
+      }
+    }
+  }
+
+  &__reviews {
+    padding: 3rem 0;
   }
 }

@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useEffect, useState, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import StarRating from 'react-svg-star-rating';
 import { addToCart } from 'store/cartSlice';
 import { useGetProductByIdQuery } from 'store/productsApi';
@@ -9,45 +9,69 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { FreeMode, Navigation, Thumbs } from 'swiper';
 import { motion } from 'framer-motion';
 import { motionContainer, motionItem } from 'helper';
-import { addToFavorites } from 'store/favoriteSlice';
+import { addToFavorites, removeFromFavorites } from 'store/favoriteSlice';
+import Fade from 'react-reveal/Fade';
+import moment from 'moment';
 
 const ItemDetails = ({ match }) => {
-  const { slug } = match.params;
   const [itemDetail, setItemDetail] = useState([]);
-  const [selectedProduct, setSelectedProduct] = useState([]);
+  const [selectedProduct, setSelectedProduct] = useState(undefined);
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
+
+  const { slug } = match.params;
+  const { favorites } = useSelector(state => state.favorites);
   const { data, loading, error } = useGetProductByIdQuery(slug);
+
   const dispatch = useDispatch();
+  const ref = useRef(null);
 
   useEffect(() => {
     setItemDetail(data);
+    window.scrollTo({ top: 0 });
   }, [slug, data]);
 
   useEffect(() => {
-    selectedProduct === []
-      ? setSelectedProduct(selectedProduct)
-      : setSelectedProduct(itemDetail && itemDetail[0]?.variantList[0]);
-  }, [itemDetail]);
+    selectedProduct === undefined
+      ? setSelectedProduct(itemDetail && itemDetail[0]?.variantList[0])
+      : setSelectedProduct(selectedProduct);
+  }, [itemDetail, selectedProduct]);
 
   const handleSelectProduct = item => {
     setSelectedProduct(item);
+  };
+
+  const handleFavoritesCheck = selectedProduct => {
+    const checkProductId = favorites.map(item => item.id);
+    const isAlreadyFavorited = checkProductId.includes(selectedProduct.id);
+
+    if (isAlreadyFavorited) {
+      dispatch(removeFromFavorites(selectedProduct));
+    } else {
+      dispatch(addToFavorites(selectedProduct));
+    }
+  };
+
+  const handleScrollRef = () => {
+    ref.current.scrollIntoView({ behavior: 'smooth', inline: 'start' });
   };
 
   const handleAddToCart = selectedProduct => {
     dispatch(addToCart(selectedProduct));
   };
 
-  const handleAddFavorites = selectedProduct => {
-    dispatch(addToFavorites(selectedProduct));
-  };
+  const sortedReviews =
+    itemDetail &&
+    itemDetail[0]?.properties?.customerReviews?.reviews?.slice().sort((a, b) => {
+      return new Date(b.createdAt) - new Date(a.createdAt);
+    });
 
   return (
-    <section className="details">
+    <AnimatedPage className="details container">
       {loading && <div>Loading...</div>}
       {error && <div>Error!</div>}
 
       {itemDetail?.map(item => (
-        <AnimatedPage className="container details__container" key={item?.id}>
+        <div className="details__container" key={item?.id}>
           <div className="details__image">
             <Swiper
               style={{
@@ -115,7 +139,7 @@ const ItemDetails = ({ match }) => {
                 </div>
               </div>
 
-              <div className="details__rating">
+              <button className="details__rating" onClick={handleScrollRef}>
                 <div className="details__rating__star">
                   <span className="details__rating__star--count">{item?.rating}</span>
                   <StarRating
@@ -129,14 +153,13 @@ const ItemDetails = ({ match }) => {
                 <div className="details__rating__count">
                   <span> {`${item?.ratingCount} Reviews`}</span>
                 </div>
-              </div>
+              </button>
             </div>
 
-            <div className="details__description">
-              <p>{item?.description}</p>
-            </div>
+            <div className="details__description">Color: {selectedProduct?.color.name}</div>
+
             <motion.ul
-              style={{ display: 'flex' }}
+              style={{ display: 'flex', flexWrap: 'wrap' }}
               className="motionContainer"
               variants={motionContainer}
               initial="hidden"
@@ -173,15 +196,52 @@ const ItemDetails = ({ match }) => {
               </button>
               <button
                 className="details__btn--add-favorites"
-                onClick={() => handleAddFavorites(selectedProduct)}
+                onClick={() => handleFavoritesCheck(selectedProduct)}
               >
                 <IconFavorites color="#0071dc" strokeWidth="3.5" width="32" height="32" />
               </button>
             </div>
           </div>
-        </AnimatedPage>
+        </div>
       ))}
-    </section>
+
+      <section className="details__info">
+        <div className="details__specification">
+          <h3 className="details__info__heading details__specification__heading">
+            Product Specifications
+          </h3>
+          <ul className="details__specification__list">
+            <Fade bottom>
+              {itemDetail &&
+                itemDetail[0]?.properties.productDetails.specifications.map((item, index) => (
+                  <li key={index} className="details__specification__list__item">
+                    <p className="details__specification__list__item--title">{item.name}</p>
+                    <img
+                      src={item.icon}
+                      alt={item.name}
+                      className="details__specification__list__item--img"
+                    />
+                    <p className="details__specification__list__item--desc">{item.value}</p>
+                  </li>
+                ))}
+            </Fade>
+          </ul>
+        </div>
+
+        <div className="details__reviews" ref={ref}>
+          <h3 className="details__info__heading details__reviews__heading">Customer Reviews</h3>
+          <ul className="details__">
+            {sortedReviews?.map((item, index) => (
+              <li key={index}>
+                <span>{item.name}</span>
+                <p>{item.comment}</p>
+                <p>{moment(item?.createdAt).format('DD/MM/YYYY')}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    </AnimatedPage>
   );
 };
 
