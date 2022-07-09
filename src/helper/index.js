@@ -27,3 +27,12 @@ export const generateReduxUniqueId = () =>
     const v = c === 'x' ? r : (r & 0x3) | 0x8;
     return v.toString(16);
   });
+
+// random date 10 to 30 days before today
+
+export const getRandomDate = () => {
+  const now = new Date();
+  const min = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 10);
+  const max = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 30);
+  return new Date(min.getTime() + Math.random() * (max.getTime() - min.getTime()));
+};
