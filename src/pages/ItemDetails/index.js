@@ -17,6 +17,7 @@ const ItemDetails = ({ match }) => {
   const [itemDetail, setItemDetail] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(undefined);
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
+  const [isFavorite, setIsFavorite] = useState(null);
 
   const { slug } = match.params;
   const { favorites } = useSelector(state => state.favorites);
@@ -28,13 +29,20 @@ const ItemDetails = ({ match }) => {
   useEffect(() => {
     setItemDetail(data);
     window.scrollTo({ top: 0 });
-  }, [slug, data]);
+  }, [data]);
 
   useEffect(() => {
     selectedProduct === undefined
       ? setSelectedProduct(itemDetail && itemDetail[0]?.variantList[0])
       : setSelectedProduct(selectedProduct);
   }, [itemDetail, selectedProduct]);
+
+  useEffect(() => {
+    if (favorites.length > 0) {
+      const isFavorite = favorites.find(item => item?.id === selectedProduct?.id);
+      setIsFavorite(isFavorite);
+    }
+  }, [favorites, selectedProduct, isFavorite]);
 
   const handleSelectProduct = item => {
     setSelectedProduct(item);
@@ -43,6 +51,8 @@ const ItemDetails = ({ match }) => {
   const handleFavoritesCheck = selectedProduct => {
     const checkProductId = favorites.map(item => item.id);
     const isAlreadyFavorited = checkProductId.includes(selectedProduct.id);
+
+    setIsFavorite(isAlreadyFavorited);
 
     if (isAlreadyFavorited) {
       dispatch(removeFromFavorites(selectedProduct));
@@ -194,12 +204,27 @@ const ItemDetails = ({ match }) => {
               >
                 Add to Cart
               </button>
-              <button
-                className="details__btn--add-favorites"
-                onClick={() => handleFavoritesCheck(selectedProduct)}
-              >
-                <IconFavorites color="#0071dc" strokeWidth="3.5" width="32" height="32" />
-              </button>
+              {(!isFavorite && (
+                <button
+                  className="details__btn--add-favorites"
+                  onClick={() => handleFavoritesCheck(selectedProduct)}
+                >
+                  <IconFavorites color="#0071dc" strokeWidth="3.5" width="32" height="32" />
+                </button>
+              )) || (
+                <button
+                  className="details__btn--add-favorites"
+                  onClick={() => handleFavoritesCheck(selectedProduct)}
+                >
+                  <IconFavorites
+                    fill="#0071dc"
+                    color="#0071dc"
+                    strokeWidth="3.5"
+                    width="32"
+                    height="32"
+                  />
+                </button>
+              )}
             </div>
           </div>
         </div>
