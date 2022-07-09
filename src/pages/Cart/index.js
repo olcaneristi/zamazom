@@ -45,11 +45,11 @@ const Cart = () => {
             <div className="cart__container">
               <div className="cart__items">
                 <motion.ul variants={motionContainer} initial="hidden" animate="visible">
-                  {state?.cartItems?.map(item => (
+                  {state?.cartItems?.map((item, index) => (
                     <motion.li
-                      key={item.id}
-                      className="cart__items__list item"
                       variants={motionItem}
+                      key={index}
+                      className="cart__items__list motionItem"
                       transition={{ duration: 0.5 }}
                     >
                       <div className="cart__items__list--left">
@@ -64,6 +64,7 @@ const Cart = () => {
                           </div>
                           <p className="cart__items__list__content__desc">{item.description}</p>
                           {item?.color && <p>Color: {item.color.name}</p>}
+                          {item?.storage && <p>Storage: {item.storage.name}</p>}
                           <div className="home__product__price">
                             <div className="home__product__price--regular">
                               {item.wasPriceRange !== item.isPriceRange && (
