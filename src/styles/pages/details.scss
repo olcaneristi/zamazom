@@ -124,6 +124,9 @@
       letter-spacing: 0.25px;
       font-weight: 700;
       margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
       &:disabled {
         background-color: #bebec0;
@@ -238,6 +241,138 @@
   }
 
   &__reviews {
-    padding: 3rem 0;
+    padding: 3rem 0 2rem 0;
+
+    &__rating {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      padding-inline: 2rem;
+
+      &__wrapper {
+        display: flex;
+        flex-direction: column;
+        margin-right: 2rem;
+        width: 300px;
+      }
+
+      &__all {
+        margin-top: 1rem;
+
+        &--btn {
+          border: 1px solid #0071dc;
+          cursor: pointer;
+          border-radius: 0.5rem;
+          padding: 0.75rem 1.5rem;
+          font-size: 0.85rem;
+          letter-spacing: 0.25px;
+          font-weight: 700;
+          color: #0071dc;
+          width: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          & > span > svg {
+            display: flex;
+          }
+        }
+      }
+
+      &__total {
+        justify-content: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        box-shadow: 0 1px 2px 1px #00000026;
+        border-radius: 8px;
+        padding: 1rem;
+
+        &--text {
+          font-size: 2.5rem;
+          overflow: hidden;
+          color: #0a3359;
+          font-weight: 700;
+        }
+
+        &--star {
+          width: 1.5rem;
+          margin-block: 0.5rem;
+        }
+
+        &--count {
+          font-size: 0.8rem;
+          color: rgb(87, 85, 85);
+        }
+      }
+
+      &__chart {
+        width: inherit;
+        padding-left: 3rem;
+      }
+    }
+
+    &__review {
+      padding: 2rem 1rem 0 1rem;
+      margin-top: 3rem;
+
+      &__item {
+        padding-inline: 1rem;
+        padding-block: 2rem;
+      }
+
+      &__user {
+        display: flex;
+        align-items: center;
+
+        &--wrapper {
+          display: flex;
+          align-items: flex-start;
+          justify-content: space-between;
+          flex-grow: 1;
+        }
+
+        &__img {
+          width: 60px;
+          height: 60px;
+          border-radius: 50%;
+          background-color: '#f5f5f5';
+        }
+
+        &__name {
+          padding-left: 0.75rem;
+
+          &--text {
+            display: flex;
+            align-items: center;
+            font-size: 1.1rem;
+            color: #0e253b;
+          }
+
+          &--icon {
+            display: flex;
+            margin-left: 0.25rem;
+          }
+        }
+
+        &__date {
+          overflow: hidden;
+
+          & > span {
+            font-size: 0.85rem;
+            letter-spacing: -0.5px;
+            color: rgb(81, 80, 80);
+          }
+        }
+      }
+
+      &__comment {
+        margin-top: 2rem;
+
+        &--text {
+          font-size: 0.9rem;
+        }
+      }
+    }
   }
 }
