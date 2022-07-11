@@ -1,36 +1,52 @@
 import IconMinus from 'assets/icons/IconMinus';
 import IconPlus from 'assets/icons/IconPlus';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { addToCart, decreaseCartItem, getCartTotal, removeFromCart } from 'store/cartSlice';
 import AnimatedPage from 'components/AnimatedPage';
 import { motionContainer, motionItem } from 'helper';
 import { motion } from 'framer-motion';
+import Loader from 'components/Loader';
 
 const Cart = () => {
   const state = useSelector(state => state.cart);
   const dispatch = useDispatch();
+  const [isSubmitLoading, setIsSubmitLoading] = useState(false);
 
   useEffect(() => {
     dispatch(getCartTotal());
   }, [state, dispatch]);
 
   const handleRemoveFromCart = item => {
-    dispatch(removeFromCart(item));
+    setIsSubmitLoading(true);
+    setTimeout(() => {
+      dispatch(removeFromCart(item));
+      setIsSubmitLoading(false);
+    }, 500);
   };
 
   const handleIncreaseQuantity = item => {
-    dispatch(addToCart(item));
+    setIsSubmitLoading(true);
+    setTimeout(() => {
+      dispatch(addToCart(item));
+      setIsSubmitLoading(false);
+    }, 500);
   };
 
   const handleDecreaseQuantity = item => {
-    dispatch(decreaseCartItem(item));
+    setIsSubmitLoading(true);
+    setTimeout(() => {
+      dispatch(decreaseCartItem(item));
+      setIsSubmitLoading(false);
+    }, 500);
   };
 
   return (
     <section className="cart">
       <AnimatedPage className="container">
+        {isSubmitLoading && <Loader haveBackground width={50} />}
+
         {(state?.cartItems.length === 0 && (
           <div className="cart__empty">
             <h2>Your card is empty.</h2>

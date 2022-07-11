@@ -6,23 +6,28 @@ import { addToCart } from 'store/cartSlice';
 import CustomModal from './CustomModal';
 import { motion } from 'framer-motion';
 import { motionContainer, motionItem } from 'helper';
+import { Oval } from 'react-loader-spinner';
 
 const ProductCard = ({ data }) => {
   const [isShown, setIsShown] = useState(false);
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState([]);
+  const [isSubmitLoading, setIsSubmitLoading] = useState(false);
 
   const handleSelectProduct = item => {
     setSelectedProduct(item);
   };
 
   const handleAddToCartAndCloseModal = item => {
-    dispatch(addToCart(item));
-
+    setIsSubmitLoading(true);
     setTimeout(() => {
-      setIsOpen(false);
-    }, 600);
+      dispatch(addToCart(item));
+      setTimeout(() => {
+        setIsOpen(false);
+      }, 1000);
+      setIsSubmitLoading(false);
+    }, 500);
   };
 
   const openSelectProductModal = data => {
@@ -70,11 +75,11 @@ const ProductCard = ({ data }) => {
           </span>
 
           <button
-            disabled={!selectedProduct.id}
+            disabled={!selectedProduct.id || isSubmitLoading}
             className="home__product__variant__summary--btn"
             onClick={() => handleAddToCartAndCloseModal(selectedProduct)}
           >
-            Add to cart
+            {isSubmitLoading ? <Oval width={16} height={16} color="#000" /> : 'Add to Cart'}
           </button>
         </div>
       </CustomModal>
