@@ -16,15 +16,16 @@ import Loader from 'components/Loader';
 import ReviewChart from 'components/ReviewChart';
 import IconVerified from 'assets/icons/IconVerified';
 import IconArrowRight from 'assets/icons/IconArrowRight';
+import { useParams } from 'react-router-dom';
 
-const ItemDetails = ({ match }) => {
+const ItemDetails = () => {
   const [itemDetail, setItemDetail] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(undefined);
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
   const [isFavorite, setIsFavorite] = useState(null);
   const [isSubmitLoading, setIsSubmitLoading] = useState(false);
 
-  const { slug } = match.params;
+  const { slug } = useParams();
   const { favorites } = useSelector(state => state.favorites);
   const { data, isLoading, error } = useGetProductByIdQuery(slug);
 
