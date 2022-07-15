@@ -1,7 +1,7 @@
-import { Home, Cart, ItemDetails, NotFound, Favorites } from 'pages';
+import { Home, Cart, ItemDetails, NotFound, Favorites, Login, Register } from 'pages';
 import Header from 'components/Header';
 import 'styles/main.scss';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 
 function App() {
@@ -9,13 +9,15 @@ function App() {
     <Router>
       <Toaster />
       <Header />
-      <Switch>
-        <Route exact path="/" component={Home} />
-        <Route exact path="/products/:slug" component={ItemDetails} />
-        <Route path="/cart" component={Cart} />
-        <Route path="/favorites" component={Favorites} />
-        <Route path="*" component={NotFound} />
-      </Switch>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/products/:slug" element={<ItemDetails />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/favorites" element={<Favorites />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
     </Router>
   );
 }
