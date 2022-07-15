@@ -8,7 +8,7 @@
 
   &__product {
     overflow: hidden;
-    max-width: calc(25% - 20px);
+    width: calc(25% - 20px);
     margin: 15px 10px;
     align-items: center;
     justify-content: center;
@@ -20,11 +20,11 @@
     z-index: 0;
 
     @include breakpoint(lg) {
-      max-width: calc(33.33% - 20px);
+      width: calc(33.33% - 20px);
     }
 
     @include breakpoint(sm) {
-      max-width: calc(50% - 20px);
+      width: calc(50% - 20px);
       margin: 0 auto 2rem auto;
     }
 
