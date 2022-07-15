@@ -28,6 +28,7 @@ const ProductCard = ({ data }) => {
       }, 1000);
       setIsSubmitLoading(false);
     }, 500);
+    setSelectedProduct([]);
   };
 
   const openSelectProductModal = data => {
