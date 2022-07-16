@@ -1,12 +1,18 @@
 import { motion } from 'framer-motion';
 
-const animations = {
-  initial: { opacity: 0, y: 100 },
-  animate: { opacity: 1, y: 0 },
-  exit: { opacity: 0, y: 100 },
-};
-
-const AnimatedPage = ({ children, className }) => {
+const AnimatedPage = ({
+  children,
+  className,
+  initialValue,
+  animateValue,
+  exitValue,
+  transitionValue,
+}) => {
+  const animations = {
+    initial: { opacity: 0, y: initialValue || 100 },
+    animate: { opacity: 1, y: animateValue || 0 },
+    exit: { opacity: 0, y: exitValue || 100 },
+  };
   return (
     <motion.div
       className={className}
@@ -14,7 +20,7 @@ const AnimatedPage = ({ children, className }) => {
       initial="initial"
       animate="animate"
       exit="exit"
-      transition={{ duration: 0.6 }}
+      transition={{ duration: transitionValue || 0.6 }}
     >
       {children}
     </motion.div>
