@@ -17,6 +17,7 @@ import ReviewChart from 'components/ReviewChart';
 import IconVerified from 'assets/icons/IconVerified';
 import IconArrowRight from 'assets/icons/IconArrowRight';
 import { useParams } from 'react-router-dom';
+import SkeletonDetails from 'components/SkeletonDetails';
 
 const ItemDetails = () => {
   const [itemDetail, setItemDetail] = useState([]);
@@ -93,8 +94,6 @@ const ItemDetails = () => {
       return new Date(b.createdAt) - new Date(a.createdAt);
     });
 
-  if (isLoading) return <Loader />;
-
   if (error) {
     return (
       <div>
@@ -104,8 +103,18 @@ const ItemDetails = () => {
   }
 
   return (
-    <AnimatedPage className="details container">
+    <AnimatedPage
+      className="details container"
+      initialValue={50}
+      exitValue={50}
+      transitionValue={0.4}
+    >
       {isSubmitLoading && <Loader haveBackground width={50} />}
+      {isLoading && (
+        <div style={{ marginTop: '2rem' }}>
+          <SkeletonDetails />
+        </div>
+      )}
 
       {itemDetail?.map(item => (
         <div className="details__container" key={item?.id}>
