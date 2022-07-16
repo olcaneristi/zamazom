@@ -3,9 +3,9 @@ import axios from 'axios';
 import jwtDecode from 'jwt-decode';
 import { API_URL } from './api';
 
-export const register = createAsyncThunk('auth/register', async (data, { rejectWithValue }) => {
+export const register = createAsyncThunk('api/register', async (data, { rejectWithValue }) => {
   try {
-    const token = await axios.post(`${API_URL}/auth/register`, data);
+    const token = await axios.post(`${API_URL}/api/register`, data);
     localStorage.setItem('token', token.data);
     return token.data;
   } catch (error) {
@@ -13,9 +13,9 @@ export const register = createAsyncThunk('auth/register', async (data, { rejectW
   }
 });
 
-export const login = createAsyncThunk('auth/login', async (data, { rejectWithValue }) => {
+export const login = createAsyncThunk('api/login', async (data, { rejectWithValue }) => {
   try {
-    const token = await axios.post(`${API_URL}/auth/login`, data);
+    const token = await axios.post(`${API_URL}/api/login`, data);
     localStorage.setItem('token', token.data);
     return token.data;
   } catch (error) {
