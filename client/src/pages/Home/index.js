@@ -2,12 +2,10 @@ import ProductCard from 'components/ProductCard';
 import React from 'react';
 import { useGetAllProductsQuery } from 'store/productsApi';
 import AnimatedPage from 'components/AnimatedPage';
-import Loader from 'components/Loader';
+import SkeletonProduct from 'components/SkeletonProduct';
 
 const Home = () => {
   const { data, error, isLoading } = useGetAllProductsQuery();
-
-  if (isLoading) return <Loader />;
 
   if (error) {
     return (
@@ -20,6 +18,7 @@ const Home = () => {
   return (
     <section className="home">
       <AnimatedPage className="container home__container">
+        {isLoading && <SkeletonProduct />}
         {data && (
           <div className="home__product__container">
             <ul className="home__product__list">
