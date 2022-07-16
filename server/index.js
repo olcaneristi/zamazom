@@ -3,22 +3,22 @@ const cors = require('cors');
 const app = express();
 const mongoose = require('mongoose');
 require('dotenv').config();
-const register = require('./routes/register');
-const login = require('./routes/login');
-const productRouter = require('./routes/products');
+const register = require('./api/register');
+const login = require('./api/login');
+const productRouter = require('./api/products');
 
 app.use(cors());
 app.use(express.json());
 
-app.use('/auth/login', login);
+app.use('/api/login', login);
 
-app.use('/auth/register', register);
+app.use('/api/register', register);
 
 app.get('/', (req, res) => {
   res.send('Hello world!');
 });
 
-app.use('/products', productRouter);
+app.use('/api/products', productRouter);
 
 const port = process.env.PORT || 8080;
 const uri = process.env.DB_URI;
