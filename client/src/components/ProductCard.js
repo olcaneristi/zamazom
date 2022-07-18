@@ -73,7 +73,10 @@ const ProductCard = ({ data }) => {
                           : '1.5px solid rgb(216, 208, 208)',
                     }}
                   >
-                    <img src={data.coverImage} alt={data.name} width="80px" height="80px" />
+                    <picture>
+                      <source srcSet={data?.coverImage} type="image/webp" />
+                      <img src={data?.coverImage} alt={data.name} width="80px" height="80px" />
+                    </picture>
                   </button>
                   <p className="home__product__variant__color">{item.color.name}</p>
                 </motion.li>
@@ -105,7 +108,10 @@ const ProductCard = ({ data }) => {
     <li className="home__product" onMouseEnter={handleEnterMouse} onMouseLeave={handleLeaveMouse}>
       <Link className="home__product__element" to={`/products/${data?.slug}`}>
         <div className="home__product__img">
-          <img src={data?.coverImage} alt={data?.name} />
+          <picture>
+            <source srcSet={data?.coverImage} type="image/webp" />
+            <img src={data?.coverImage} alt={data?.name} />
+          </picture>
         </div>
         <div className="home__product__content">
           <div className="home__product__text">

@@ -135,7 +135,10 @@ const ItemDetails = () => {
             >
               {item?.images?.map((image, index) => (
                 <SwiperSlide key={index}>
-                  <img src={image} alt={item?.name} />
+                  <picture>
+                    <source srcSet={image} type="image/webp" />
+                    <img src={image} alt={item?.name} />
+                  </picture>
                 </SwiperSlide>
               ))}
             </Swiper>
@@ -150,7 +153,10 @@ const ItemDetails = () => {
             >
               {item?.images?.map((image, index) => (
                 <SwiperSlide key={index}>
-                  <img src={image} alt={item?.name} />
+                  <picture>
+                    <source srcSet={image} type="image/webp" />
+                    <img src={image} alt={item?.name} />
+                  </picture>
                 </SwiperSlide>
               ))}
             </Swiper>
@@ -230,7 +236,10 @@ const ItemDetails = () => {
                           : '1.5px solid rgb(216, 208, 208)',
                     }}
                   >
-                    <img src={variant.coverImage} alt={variant.name} width="80px" />
+                    <picture>
+                      <source srcSet={variant.coverImage} type="image/webp" />
+                      <img src={variant.coverImage} alt={variant.name} width="80px" />
+                    </picture>
                   </button>
                   <p className="home__product__variant__color">{variant.color.name}</p>
                 </motion.li>
@@ -350,11 +359,15 @@ const ItemDetails = () => {
                 >
                   <div className="details__reviews__review__content">
                     <div className="details__reviews__review__user">
-                      <img
-                        src={`https://i.pravatar.cc/300?img${index}`}
-                        alt="user"
-                        className="details__reviews__review__user__img"
-                      />
+                      <picture>
+                        <source src={`https://i.pravatar.cc/300?img${index}`} type="image/webp" />
+                        <img
+                          src={`https://i.pravatar.cc/300?img${index}`}
+                          alt="user"
+                          className="details__reviews__review__user__img"
+                        />
+                      </picture>
+
                       <div className="details__reviews__review__user--wrapper">
                         <div className="details__reviews__review__user__name">
                           <p className="details__reviews__review__user__name--text">

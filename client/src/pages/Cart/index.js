@@ -119,7 +119,10 @@ const Cart = () => {
                       <div className="cart__items__list--left">
                         <div className="cart__items__list__img">
                           <Link to={`/products/${item.slug}`}>
-                            <img src={item.coverImage} alt={item.name} />
+                            <picture>
+                              <source srcSet={item?.coverImage} type="image/webp" />
+                              <img src={item.coverImage} alt={item.name} />
+                            </picture>
                           </Link>
                         </div>
                         <div className="cart__items__list__content">
