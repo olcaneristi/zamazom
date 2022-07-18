@@ -1,14 +1,15 @@
 .header {
   padding: 0.5rem 1rem;
   background-color: #0071dc;
-  position: sticky;
-  top: 0;
+  //position: sticky;
+  //top: 0;
   z-index: 99;
 
   &__container {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    max-width: $container-max-width + 60px !important;
   }
 
   &__nav {
