@@ -40,8 +40,10 @@
     }
 
     &__img {
-      width: 90%;
+      max-width: 260px;
+      max-height: 260px;
       margin: 0 auto;
+      padding: 0.5rem;
     }
 
     &__title {

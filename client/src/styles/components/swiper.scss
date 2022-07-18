@@ -14,7 +14,8 @@
     }
 
     img {
-      width: 45% !important;
+      width: 40px !important;
+      height: 40px !important;
     }
   }
 }
@@ -33,9 +34,9 @@
 
 .swiper-slide img {
   display: block;
-  width: 70%;
+  max-width: 410px;
+  max-height: 410px;
   margin: 0 auto;
-  height: 70%;
   object-fit: cover;
   border-radius: 8px;
 }
