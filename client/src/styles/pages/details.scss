@@ -1,6 +1,8 @@
 .details {
   padding-inline: 1rem;
   max-width: $container-max-width + 40px !important;
+  min-height: 90vh;
+
   &__container {
     display: flex;
     align-items: flex-start;
@@ -38,6 +40,10 @@
     @include breakpoint(md) {
       width: 100%;
       margin-inline: 0;
+    }
+
+    @include breakpoint(xs) {
+      padding-inline: 0.8rem;
     }
 
     &__brand {
@@ -169,11 +175,16 @@
     padding: 1rem;
     margin: 3.5rem 0;
 
+    @include breakpoint(xs) {
+      padding: 1rem 0;
+    }
+
     &__heading {
       font-weight: 700;
       font-size: 1.6rem;
       padding-bottom: 2rem;
       color: rgb(9, 35, 60);
+      padding-inline: 1rem;
     }
   }
 
@@ -207,6 +218,10 @@
 
         @include breakpoint(sm) {
           width: calc(100% / 3.5 - 10px);
+        }
+
+        @include breakpoint(xs) {
+          width: calc(100% / 2.5 + 3%);
         }
 
         &--title {
@@ -248,13 +263,23 @@
       display: flex;
       align-items: center;
       width: 100%;
-      padding-inline: 2rem;
+      padding-inline: 1.1rem;
+
+      @include breakpoint(xs) {
+        flex-direction: column;
+      }
 
       &__wrapper {
         display: flex;
         flex-direction: column;
         margin-right: 2rem;
         width: 300px;
+
+        @include breakpoint(xs) {
+          width: 100%;
+          margin-right: 0;
+          margin-bottom: 2rem;
+        }
       }
 
       &__all {
@@ -264,7 +289,7 @@
           border: 1px solid #0071dc;
           cursor: pointer;
           border-radius: 0.5rem;
-          padding: 0.75rem 1.5rem;
+          padding: 0.75rem 1rem;
           font-size: 0.85rem;
           letter-spacing: 0.25px;
           font-weight: 700;
@@ -273,6 +298,10 @@
           display: flex;
           align-items: center;
           justify-content: center;
+
+          @include breakpoint(md) {
+            padding: 0.75rem 0.75rem;
+          }
 
           & > span > svg {
             display: flex;
@@ -310,6 +339,11 @@
       &__chart {
         width: inherit;
         padding-left: 3rem;
+
+        @include breakpoint(xs) {
+          width: 100%;
+          padding-left: 0;
+        }
       }
     }
 
@@ -317,9 +351,22 @@
       padding: 2rem 1rem 0 1rem;
       margin-top: 3rem;
 
+      @include breakpoint(xs) {
+        margin-top: 0;
+        padding: 2rem 0.5rem 0 0.5rem;
+      }
+
       &__item {
         padding-inline: 1rem;
         padding-block: 2rem;
+
+        &:nth-last-child(1) {
+          padding-bottom: 0;
+        }
+
+        @include breakpoint(xs) {
+          padding-inline: 0.5rem;
+        }
       }
 
       &__user {
@@ -353,6 +400,10 @@
           &--icon {
             display: flex;
             margin-left: 0.25rem;
+
+            @include breakpoint(xs) {
+              display: none;
+            }
           }
         }
 

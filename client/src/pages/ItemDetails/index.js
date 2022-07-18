@@ -17,7 +17,7 @@ import ReviewChart from 'components/ReviewChart';
 import IconVerified from 'assets/icons/IconVerified';
 import IconArrowRight from 'assets/icons/IconArrowRight';
 import { useParams } from 'react-router-dom';
-import SkeletonDetails from 'components/SkeletonDetails';
+import useWindowSize from 'hooks/useWindowSize';
 
 const ItemDetails = () => {
   const [itemDetail, setItemDetail] = useState([]);
@@ -32,10 +32,11 @@ const ItemDetails = () => {
 
   const dispatch = useDispatch();
   const ref = useRef(null);
+  const { width } = useWindowSize();
 
   useEffect(() => {
     setItemDetail(data);
-    window.scrollTo({ top: 0 });
+    window.scrollTo(0, 0);
   }, [data]);
 
   useEffect(() => {
@@ -102,6 +103,14 @@ const ItemDetails = () => {
     );
   }
 
+  if (isLoading) {
+    return (
+      <div style={{ marginTop: '2rem', minHeight: '90vh' }}>
+        <Loader />
+      </div>
+    );
+  }
+
   return (
     <AnimatedPage
       className="details container"
@@ -110,12 +119,6 @@ const ItemDetails = () => {
       transitionValue={0.4}
     >
       {isSubmitLoading && <Loader haveBackground width={50} />}
-      {isLoading && (
-        <div style={{ marginTop: '2rem' }}>
-          <SkeletonDetails />
-        </div>
-      )}
-
       {itemDetail?.map(item => (
         <div className="details__container" key={item?.id}>
           <div className="details__image">
@@ -315,10 +318,10 @@ const ItemDetails = () => {
 
               <div className="details__reviews__rating__all">
                 <button type="button" className="details__reviews__rating__all--btn">
-                  View all reviews (
-                  {itemDetail &&
-                    itemDetail[0]?.properties?.customerReviews?.totalCustomerRatingCount}
-                  )
+                  View all reviews{' '}
+                  {width > 768 &&
+                    itemDetail &&
+                    ` (${itemDetail[0]?.properties?.customerReviews?.totalCustomerRatingCount})`}
                   <span>
                     <IconArrowRight width="18" height="18" color="#0071dc" />
                   </span>
