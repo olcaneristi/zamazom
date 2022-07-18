@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import StarRating from 'react-svg-star-rating';
 import { useDispatch } from 'react-redux';
@@ -7,6 +7,7 @@ import CustomModal from './CustomModal';
 import { motion } from 'framer-motion';
 import { motionContainer, motionItem } from 'helper';
 import { Oval } from 'react-loader-spinner';
+import useWindowSize from 'hooks/useWindowSize';
 
 const ProductCard = ({ data }) => {
   const [isShown, setIsShown] = useState(false);
@@ -14,10 +15,15 @@ const ProductCard = ({ data }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState([]);
   const [isSubmitLoading, setIsSubmitLoading] = useState(false);
+  const { width } = useWindowSize();
 
   const handleSelectProduct = item => {
     setSelectedProduct(item);
   };
+
+  useEffect(() => {
+    width < 768 ? setIsShown(true) : setIsShown(false);
+  }, [width]);
 
   const handleAddToCartAndCloseModal = item => {
     setIsSubmitLoading(true);
@@ -29,6 +35,14 @@ const ProductCard = ({ data }) => {
       setIsSubmitLoading(false);
     }, 500);
     setSelectedProduct([]);
+  };
+
+  const handleEnterMouse = () => {
+    setIsShown(true);
+  };
+
+  const handleLeaveMouse = () => {
+    width > 768 && setIsShown(false);
   };
 
   const openSelectProductModal = data => {
@@ -88,11 +102,7 @@ const ProductCard = ({ data }) => {
   };
 
   return (
-    <li
-      className="home__product"
-      onMouseEnter={() => setIsShown(true)}
-      onMouseLeave={() => setIsShown(false)}
-    >
+    <li className="home__product" onMouseEnter={handleEnterMouse} onMouseLeave={handleLeaveMouse}>
       <Link className="home__product__element" to={`/products/${data?.slug}`}>
         <div className="home__product__img">
           <img src={data?.coverImage} alt={data?.name} />

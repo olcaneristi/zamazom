@@ -2,7 +2,7 @@ import ProductCard from 'components/ProductCard';
 import React from 'react';
 import { useGetAllProductsQuery } from 'store/productsApi';
 import AnimatedPage from 'components/AnimatedPage';
-import SkeletonProduct from 'components/SkeletonProduct';
+import Loader from 'components/Loader';
 
 const Home = () => {
   const { data, error, isLoading } = useGetAllProductsQuery();
@@ -17,8 +17,13 @@ const Home = () => {
 
   return (
     <section className="home">
+      {isLoading && (
+        <div style={{ minHeight: '90vh' }}>
+          <Loader />
+        </div>
+      )}
+
       <AnimatedPage className="container home__container">
-        {isLoading && <SkeletonProduct />}
         {data && (
           <div className="home__product__container">
             <ul className="home__product__list">

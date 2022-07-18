@@ -12,6 +12,7 @@
     margin: 15px 10px;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
     box-shadow: rgba(50, 50, 105, 0.15) 0px 2px 5px 0px, rgba(0, 0, 0, 0.05) 0px 1px 1px 0px;
     display: flex;
     background-color: #fff;
@@ -28,11 +29,33 @@
       margin: 0 auto 2rem auto;
     }
 
+    @include breakpoint(xs) {
+      width: calc(50% - 10px);
+      margin: 0 auto 1rem auto;
+    }
+
+    &__container {
+      margin-block: 1rem;
+    }
+
     &__content {
       padding: 0.75rem 1rem 0.5rem 1rem;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+
+      @include breakpoint(xs) {
+        padding: 0.75rem 0.75rem 0.5rem 0.75rem;
+      }
+    }
+
+    &__text {
+      min-height: 40px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     &__element {
@@ -69,10 +92,14 @@
       flex-direction: column;
       place-content: center;
       min-height: 40px;
-      margin-top: 0.7rem;
+      margin-top: -0.5rem;
       margin-bottom: 1.5rem;
       font-size: 1.05rem;
       font-weight: 700;
+
+      @include breakpoint(xs) {
+        margin-top: 0.5rem;
+      }
 
       &--regular {
         height: 1rem;
@@ -131,6 +158,11 @@
       right: 0;
       width: 90%;
       margin: 0 auto;
+
+      @include breakpoint(sm) {
+        position: unset;
+        margin-bottom: 1rem;
+      }
 
       &-btn {
         width: 100%;
