@@ -78,7 +78,7 @@ const Cart = () => {
   return (
     <section className="cart">
       <AnimatedPage className="container">
-        {isSubmitLoading && <Loader />}
+        {isSubmitLoading && <Loader haveBackground width={50} />}
 
         {(state?.cartItems.length === 0 && (
           <div className="cart__empty">
