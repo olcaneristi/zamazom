@@ -44,6 +44,10 @@
       max-height: 260px;
       margin: 0 auto;
       padding: 0.5rem;
+
+      & > img {
+        width: 100%;
+      }
     }
 
     &__title {

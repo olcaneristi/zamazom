@@ -59,7 +59,7 @@ const ProductCard = ({ data }) => {
                           : '1.5px solid rgb(216, 208, 208)',
                     }}
                   >
-                    <img src={data.coverImage} alt={data.name} width="80px" />
+                    <img src={data.coverImage} alt={data.name} width="80px" height="80px" />
                   </button>
                   <p className="home__product__variant__color">{item.color.name}</p>
                 </motion.li>
@@ -95,7 +95,7 @@ const ProductCard = ({ data }) => {
     >
       <Link className="home__product__element" to={`/products/${data?.slug}`}>
         <div className="home__product__img">
-          <img src={data?.coverImage} alt={data?.name} width="100%" />
+          <img src={data?.coverImage} alt={data?.name} />
         </div>
         <div className="home__product__content">
           <div className="home__product__text">
