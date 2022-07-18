@@ -7,7 +7,19 @@ import { addToCart, decreaseCartItem, getCartTotal, removeFromCart } from 'store
 import AnimatedPage from 'components/AnimatedPage';
 import { motionContainer, motionItem } from 'helper';
 import { motion } from 'framer-motion';
+import Lottie from 'react-lottie';
+import animationData from 'assets/lotties/shake-a-empty-box';
 import Loader from 'components/Loader';
+import IconReturn from 'assets/icons/IconReturn';
+
+const defaultOptions = {
+  loop: true,
+  autoplay: true,
+  animationData: animationData,
+  rendererSettings: {
+    preserveAspectRatio: 'xMidYMid slice',
+  },
+};
 
 const Cart = () => {
   const state = useSelector(state => state.cart);
@@ -42,21 +54,57 @@ const Cart = () => {
     }, 500);
   };
 
+  const handleCalculateTax = () => {
+    let totalTax = 0;
+
+    if (state?.cartTotalAmount > 2000) {
+      totalTax = state.cartTotalAmount * 0.035;
+    } else if (state?.cartTotalAmount > 3000) {
+      totalTax = state.cartTotalAmount * 0.04;
+    } else if (state?.cartTotalAmount > 4000) {
+      totalTax = state.cartTotalAmount * 0.045;
+    } else if (state?.cartTotalAmount > 5000) {
+      totalTax = state.cartTotalAmount * 0.05;
+    } else totalTax = state.cartTotalAmount * 0.025;
+
+    return totalTax;
+  };
+
+  const estimatedTotalWithTax = () => {
+    const totalTax = handleCalculateTax();
+    return state.cartTotalAmount + totalTax;
+  };
+
   return (
     <section className="cart">
       <AnimatedPage className="container">
-        {isSubmitLoading && <Loader haveBackground width={50} />}
+        {isSubmitLoading && <Loader />}
 
         {(state?.cartItems.length === 0 && (
           <div className="cart__empty">
-            <h2>Your card is empty.</h2>
-            <p>Description here.</p>
+            <Lottie
+              isClickToPauseDisabled={true}
+              options={defaultOptions}
+              style={{ maxWidth: 350 }}
+            />
+            <h2 className="cart__empty__title">Your cart is currently empty!</h2>
+            <p className="cart__empty__description">
+              Looks like you haven't made your choice yet..
+            </p>
+            <Link to="/" className="cart__empty__return">
+              Return to Home
+              <span>
+                <IconReturn width="20" height="20" background="#0071dc" color="#0071dc" />
+              </span>
+            </Link>
           </div>
         )) || (
           <>
             <div className="cart__info">
-              <h2>Your Cart</h2>
-              <span>{state?.cartItems?.length} items</span>
+              <h2>Cart</h2>
+              <span>
+                ({state?.cartItems?.length} {state?.cartItems?.length === 1 ? 'item' : 'items'})
+              </span>
             </div>
             <div className="cart__container">
               <div className="cart__items">
@@ -71,16 +119,18 @@ const Cart = () => {
                       <div className="cart__items__list--left">
                         <div className="cart__items__list__img">
                           <Link to={`/products/${item.slug}`}>
-                            <img src={item.coverImage} alt={item.name} width="100" height="100" />
+                            <img src={item.coverImage} alt={item.name} />
                           </Link>
                         </div>
                         <div className="cart__items__list__content">
                           <div className="cart__items__list__content__name">
                             <Link to={`/products/${item.slug}`}>{item.name}</Link>
                           </div>
-                          <p className="cart__items__list__content__desc">{item.description}</p>
-                          {item?.color && <p>Color: {item.color.name}</p>}
-                          {item?.storage && <p>Storage: {item.storage.name}</p>}
+                          {item?.color && (
+                            <p className="cart__items__list__content__color">
+                              Color: <span>{item.color.name}</span>
+                            </p>
+                          )}
                           <div className="home__product__price">
                             <div className="home__product__price--regular">
                               {item.wasPriceRange !== item.isPriceRange && (
@@ -139,7 +189,7 @@ const Cart = () => {
                   </div>
                   <div className="cart__checkout__summary">
                     <div className="cart__checkout__summary--subtotal">
-                      <span>Subtotal ({state?.cartItems?.length} items)</span>
+                      <span>Subtotal</span>
                       <span>
                         {state?.cartTotalAmount.toLocaleString('en-US', {
                           style: 'currency',
@@ -149,13 +199,18 @@ const Cart = () => {
                     </div>
                     <div className="cart__checkout__summary--taxes">
                       <span>Taxes</span>
-                      <span>Calculated at checkout</span>
+                      <span>
+                        {handleCalculateTax().toLocaleString('en-US', {
+                          style: 'currency',
+                          currency: 'USD',
+                        })}
+                      </span>
                     </div>
                   </div>
                   <div className="cart__checkout__estimated__total">
                     <span>Estimated total</span>
                     <span>
-                      {state?.cartTotalAmount.toLocaleString('en-US', {
+                      {estimatedTotalWithTax().toLocaleString('en-US', {
                         style: 'currency',
                         currency: 'USD',
                       })}
