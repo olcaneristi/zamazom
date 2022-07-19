@@ -54,25 +54,17 @@ const Cart = () => {
     }, 500);
   };
 
-  const handleCalculateTax = () => {
-    let totalTax = 0;
+  const calculateTotalDiscounts = () => {
+    let totalDiscount = 0;
+    const checkDiscount = state.cartItems.filter(item => item.isPriceRange !== item.wasPriceRange);
 
-    if (state?.cartTotalAmount > 2000) {
-      totalTax = state.cartTotalAmount * 0.035;
-    } else if (state?.cartTotalAmount > 3000) {
-      totalTax = state.cartTotalAmount * 0.04;
-    } else if (state?.cartTotalAmount > 4000) {
-      totalTax = state.cartTotalAmount * 0.045;
-    } else if (state?.cartTotalAmount > 5000) {
-      totalTax = state.cartTotalAmount * 0.05;
-    } else totalTax = state.cartTotalAmount * 0.025;
+    const totalDiscountInitial = checkDiscount.reduce((acc, item) => {
+      return acc + (item.wasPriceRange - item.isPriceRange) * item.quantity;
+    }, totalDiscount);
 
-    return totalTax;
-  };
+    console.log(checkDiscount);
 
-  const estimatedTotalWithTax = () => {
-    const totalTax = handleCalculateTax();
-    return state.cartTotalAmount + totalTax;
+    return totalDiscountInitial;
   };
 
   return (
@@ -194,16 +186,32 @@ const Cart = () => {
                     <div className="cart__checkout__summary--subtotal">
                       <span>Subtotal</span>
                       <span>
-                        {state?.cartTotalAmount.toLocaleString('en-US', {
-                          style: 'currency',
-                          currency: 'USD',
-                        })}
+                        {(state?.cartTotalAmount + calculateTotalDiscounts()).toLocaleString(
+                          'en-US',
+                          {
+                            style: 'currency',
+                            currency: 'USD',
+                          },
+                        )}
                       </span>
                     </div>
+                    {state?.cartItems?.filter(item => item.isPriceRange !== item.wasPriceRange)
+                      .length > 0 && (
+                      <div className="cart__checkout__summary--discount">
+                        <span>Discount</span>
+                        <span className="cart__checkout__summary--discount-value">
+                          {' - '}
+                          {calculateTotalDiscounts().toLocaleString('en-US', {
+                            style: 'currency',
+                            currency: 'USD',
+                          })}
+                        </span>
+                      </div>
+                    )}
                     <div className="cart__checkout__summary--taxes">
                       <span>Taxes</span>
                       <span>
-                        {handleCalculateTax().toLocaleString('en-US', {
+                        {state?.cartTotalTaxes.toLocaleString('en-US', {
                           style: 'currency',
                           currency: 'USD',
                         })}
@@ -213,7 +221,7 @@ const Cart = () => {
                   <div className="cart__checkout__estimated__total">
                     <span>Estimated total</span>
                     <span>
-                      {estimatedTotalWithTax().toLocaleString('en-US', {
+                      {(state?.cartTotalAmount + state?.cartTotalTaxes).toLocaleString('en-US', {
                         style: 'currency',
                         currency: 'USD',
                       })}
