@@ -62,8 +62,6 @@ const Cart = () => {
       return acc + (item.wasPriceRange - item.isPriceRange) * item.quantity;
     }, totalDiscount);
 
-    console.log(checkDiscount);
-
     return totalDiscountInitial;
   };
 

@@ -82,15 +82,13 @@ const cartSlice = createSlice({
     getCartTotal(state, action) {
       let totalTax = 0;
 
-      if (state.cartTotalAmount > 2000) {
+      if (state.cartTotalAmount >= 2000 && state.cartTotalAmount <= 2999) {
         totalTax = state.cartTotalAmount * 0.035;
-        console.log('2000 ustu');
-      } else if (state.cartTotalAmount > 3000) {
-        console.log('3000 ustu');
+      } else if (state.cartTotalAmount >= 3000 && state.cartTotalAmount <= 3999) {
         totalTax = state.cartTotalAmount * 0.04;
-      } else if (state.cartTotalAmount > 4000) {
+      } else if (state.cartTotalAmount >= 4000 && state.cartTotalAmount <= 4999) {
         totalTax = state.cartTotalAmount * 0.045;
-      } else if (state.cartTotalAmount > 5000) {
+      } else if (state.cartTotalAmount >= 5000) {
         totalTax = state.cartTotalAmount * 0.05;
       } else totalTax = state.cartTotalAmount * 0.025;
 
