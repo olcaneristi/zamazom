@@ -211,7 +211,7 @@ const Cart = () => {
                     <div className="cart__checkout__summary--taxes">
                       <span>Taxes</span>
                       <span>
-                        {state?.cartTotalTaxes.toLocaleString('en-US', {
+                        {state?.cartTotalTaxes?.toLocaleString('en-US', {
                           style: 'currency',
                           currency: 'USD',
                         })}

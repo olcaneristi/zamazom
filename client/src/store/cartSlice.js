@@ -80,26 +80,27 @@ const cartSlice = createSlice({
     },
 
     getCartTotal(state, action) {
-      const { totalAmount, totalQuantity, totalTaxes } = state.cartItems.reduce(
+      let totalTax = 0;
+
+      if (state.cartTotalAmount > 2000) {
+        totalTax = state.cartTotalAmount * 0.035;
+        console.log('2000 ustu');
+      } else if (state.cartTotalAmount > 3000) {
+        console.log('3000 ustu');
+        totalTax = state.cartTotalAmount * 0.04;
+      } else if (state.cartTotalAmount > 4000) {
+        totalTax = state.cartTotalAmount * 0.045;
+      } else if (state.cartTotalAmount > 5000) {
+        totalTax = state.cartTotalAmount * 0.05;
+      } else totalTax = state.cartTotalAmount * 0.025;
+
+      const { totalAmount, totalQuantity } = state.cartItems.reduce(
         (cartSubtotal, cartItem) => {
           const { isPriceRange, quantity } = cartItem;
           const itemTotal = isPriceRange * quantity;
 
-          let totalTax = 0;
-
-          if (itemTotal > 2000) {
-            totalTax = itemTotal * 0.035;
-          } else if (itemTotal > 3000) {
-            totalTax = itemTotal * 0.04;
-          } else if (itemTotal > 4000) {
-            totalTax = itemTotal * 0.045;
-          } else if (itemTotal > 5000) {
-            totalTax = itemTotal * 0.05;
-          } else totalTax = itemTotal * 0.025;
-
           cartSubtotal.totalAmount += itemTotal;
           cartSubtotal.totalQuantity += quantity;
-          cartSubtotal.totalTaxes = totalTax;
           return cartSubtotal;
         },
         {
@@ -109,7 +110,7 @@ const cartSlice = createSlice({
       );
       state.cartTotalQuantity = totalQuantity;
       state.cartTotalAmount = totalAmount;
-      state.cartTotalTaxes = totalTaxes;
+      state.cartTotalTaxes = totalTax;
     },
   },
   extraReducers: {},
