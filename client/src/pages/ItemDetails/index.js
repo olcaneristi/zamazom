@@ -46,7 +46,7 @@ const ItemDetails = () => {
   }, [itemDetail, selectedProduct]);
 
   useEffect(() => {
-    if (favorites.length > 0) {
+    if (favorites.length >= 0) {
       const isFavorite = favorites.find(item => item?.id === selectedProduct?.id);
       setIsFavorite(isFavorite);
     }
