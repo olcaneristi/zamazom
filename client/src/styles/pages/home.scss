@@ -193,6 +193,15 @@
         justify-content: center;
       }
 
+      &__item {
+        max-width: 5rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-self: center;
+        margin: 0.5rem;
+      }
+
       &__button {
         cursor: pointer;
         display: flex;
@@ -201,12 +210,15 @@
         border: 1.5px solid rgb(216, 208, 208);
         overflow: hidden;
         padding: 0.5rem;
-        margin: 0.5rem;
+
+        &--selected {
+          border: 1.5px solid black;
+        }
       }
 
       &__color {
-        margin-inline: 0.5rem;
         font-size: 0.8rem;
+        margin-top: 0.5rem;
         text-align: center;
       }
 

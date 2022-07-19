@@ -227,18 +227,16 @@ const ItemDetails = () => {
                   variants={motionItem}
                 >
                   <button
-                    className="home__product__variant__button"
+                    className={`home__product__variant__button ${
+                      selectedProduct?.id === variant.id
+                        ? 'home__product__variant__button--selected'
+                        : ''
+                    }`}
                     onClick={() => handleSelectProduct(variant)}
-                    style={{
-                      border:
-                        selectedProduct?.id === variant?.id
-                          ? '1.5px solid black'
-                          : '1.5px solid rgb(216, 208, 208)',
-                    }}
                   >
                     <picture>
                       <source srcSet={variant.coverImage} type="image/webp" />
-                      <img src={variant.coverImage} alt={variant.name} width="80px" />
+                      <img src={variant.coverImage} alt={variant.name} width="50" />
                     </picture>
                   </button>
                   <p className="home__product__variant__color">{variant.color.name}</p>
