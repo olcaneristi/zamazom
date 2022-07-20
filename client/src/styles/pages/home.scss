@@ -19,6 +19,7 @@
     border-radius: 6px;
     position: relative;
     z-index: 0;
+    animation: fadeInProductCard 0.5s ease-in-out forwards;
 
     @include breakpoint(lg) {
       width: calc(33.33% - 20px);
@@ -246,5 +247,38 @@
         }
       }
     }
+  }
+
+  &__pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+
+    &__btn {
+      cursor: pointer;
+      margin: 0.5rem;
+      border-radius: 8px;
+      border: 1px solid #0071dc;
+      color: #0071dc;
+      min-width: 2.5rem;
+      min-height: 2.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      transition: all 0.3s ease-in-out;
+
+      &:hover {
+      }
+    }
+  }
+}
+
+@keyframes fadeInProductCard {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }

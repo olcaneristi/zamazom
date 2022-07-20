@@ -7,7 +7,7 @@ export const productsApi = createApi({
 
   endpoints: builder => ({
     getAllProducts: builder.query({
-      query: () => 'api/products',
+      query: (page = 0) => `api/products?page=${page}`,
     }),
     getProductById: builder.query({
       query: slug => `api/products/${slug}`,

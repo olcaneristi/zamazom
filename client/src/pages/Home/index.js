@@ -1,11 +1,26 @@
 import ProductCard from 'components/ProductCard';
-import React from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useGetAllProductsQuery } from 'store/productsApi';
-import AnimatedPage from 'components/AnimatedPage';
 import Loader from 'components/Loader';
 
 const Home = () => {
-  const { data, error, isLoading } = useGetAllProductsQuery();
+  const [page, setPage] = useState(0);
+  const [numberOfPages, setNumberOfPages] = useState(0);
+  const { data, error, isFetching } = useGetAllProductsQuery(page);
+
+  const pages = new Array(numberOfPages).fill(null).map((v, i) => i);
+
+  useEffect(() => {
+    setNumberOfPages(data && data.totalPages);
+  }, [data]);
+
+  const paginationHandler = pageIndex => {
+    setPage(pageIndex);
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  };
 
   if (error) {
     return (
@@ -17,23 +32,39 @@ const Home = () => {
 
   return (
     <section className="home">
-      {isLoading && (
+      {isFetching && (
         <div style={{ minHeight: '90vh' }}>
-          <Loader />
+          <Loader haveBackground />
         </div>
       )}
 
-      <AnimatedPage className="container home__container">
+      <div className="container home__container">
         {data && (
           <div className="home__product__container">
             <ul className="home__product__list">
-              {data.map(product => (
+              {data?.products?.map(product => (
                 <ProductCard data={product} key={product.id} />
               ))}
             </ul>
           </div>
         )}
-      </AnimatedPage>
+      </div>
+
+      <h3 style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        Page {page + 1} of {numberOfPages}
+      </h3>
+
+      <div className="home__pagination">
+        {pages.map((pageIndex, i) => (
+          <button
+            key={i}
+            onClick={() => paginationHandler(pageIndex)}
+            className="home__pagination__btn"
+          >
+            {pageIndex + 1}
+          </button>
+        ))}
+      </div>
     </section>
   );
 };
