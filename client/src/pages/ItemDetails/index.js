@@ -1,22 +1,22 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import StarRating from 'react-svg-star-rating';
-import { addToCart } from 'store/cartSlice';
-import { useGetProductByIdQuery } from 'store/productsApi';
+import { addToCart } from 'services/cartSlice';
+import { useGetProductByIdQuery } from 'services/productsApi';
 import IconFavorites from 'assets/icons/IconFavorites';
 import AnimatedPage from 'components/AnimatedPage';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { FreeMode, Navigation, Thumbs } from 'swiper';
 import { motion } from 'framer-motion';
-import { motionContainer, motionItem } from 'helper';
-import { addToFavorites, removeFromFavorites } from 'store/favoriteSlice';
+import { motionContainer, motionItem } from 'utils';
+import { addToFavorites, removeFromFavorites } from 'services/favoriteSlice';
 import Fade from 'react-reveal/Fade';
 import moment from 'moment';
 import Loader from 'components/Loader';
 import ReviewChart from 'components/ReviewChart';
 import IconVerified from 'assets/icons/IconVerified';
 import IconArrowRight from 'assets/icons/IconArrowRight';
-import { useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import useWindowSize from 'hooks/useWindowSize';
 
 const ItemDetails = () => {
@@ -27,7 +27,11 @@ const ItemDetails = () => {
   const [isSubmitLoading, setIsSubmitLoading] = useState(false);
 
   const { slug } = useParams();
+  let navigate = useNavigate();
+  const { pathname } = useLocation();
   const { favorites } = useSelector(state => state.favorites);
+  const { isAuthenticated } = useSelector(state => state.auth);
+
   const { data, isLoading, error } = useGetProductByIdQuery(slug);
 
   const dispatch = useDispatch();
@@ -46,34 +50,43 @@ const ItemDetails = () => {
   }, [itemDetail, selectedProduct]);
 
   useEffect(() => {
-    if (favorites.length >= 0) {
+    if (favorites.length >= 0 && isAuthenticated) {
       const isFavorite = favorites.find(item => item?.id === selectedProduct?.id);
       setIsFavorite(isFavorite);
     }
-  }, [favorites, selectedProduct, isFavorite]);
+  }, [favorites, selectedProduct, isFavorite, isAuthenticated]);
 
   const handleSelectProduct = item => {
     setSelectedProduct(item);
   };
 
   const handleFavoritesCheck = selectedProduct => {
-    const checkProductId = favorites.map(item => item.id);
-    const isAlreadyFavorited = checkProductId.includes(selectedProduct.id);
+    if (isAuthenticated) {
+      const checkProductId = favorites.map(item => item.id);
+      const isAlreadyFavorited = checkProductId.includes(selectedProduct.id);
 
-    setIsFavorite(isAlreadyFavorited);
+      setIsFavorite(isAlreadyFavorited);
 
-    if (isFavorite) {
-      setIsSubmitLoading(true);
-      setTimeout(() => {
-        dispatch(removeFromFavorites(selectedProduct));
-        setIsSubmitLoading(false);
-      }, 500);
+      if (isFavorite) {
+        setIsSubmitLoading(true);
+        setTimeout(() => {
+          dispatch(removeFromFavorites(selectedProduct));
+          setIsSubmitLoading(false);
+        }, 500);
+      } else {
+        setIsSubmitLoading(true);
+        setTimeout(() => {
+          dispatch(addToFavorites(selectedProduct));
+          setIsSubmitLoading(false);
+        }, 500);
+      }
     } else {
-      setIsSubmitLoading(true);
-      setTimeout(() => {
-        dispatch(addToFavorites(selectedProduct));
-        setIsSubmitLoading(false);
-      }, 500);
+      navigate('/login', {
+        replace: true,
+        state: {
+          from: pathname,
+        },
+      });
     }
   };
 
