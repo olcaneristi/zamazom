@@ -1,26 +1,12 @@
 import ProductCard from 'components/ProductCard';
-import React, { useEffect, useState, useRef } from 'react';
-import { useGetAllProductsQuery } from 'store/productsApi';
+import React, { useState } from 'react';
+import { useGetAllProductsQuery } from 'services/productsApi';
 import Loader from 'components/Loader';
+import Pagination from 'components/Pagination';
 
 const Home = () => {
   const [page, setPage] = useState(0);
-  const [numberOfPages, setNumberOfPages] = useState(0);
   const { data, error, isFetching } = useGetAllProductsQuery(page);
-
-  const pages = new Array(numberOfPages).fill(null).map((v, i) => i);
-
-  useEffect(() => {
-    setNumberOfPages(data && data.totalPages);
-  }, [data]);
-
-  const paginationHandler = pageIndex => {
-    setPage(pageIndex);
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    });
-  };
 
   if (error) {
     return (
@@ -50,21 +36,7 @@ const Home = () => {
         )}
       </div>
 
-      <h3 style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        Page {page + 1} of {numberOfPages}
-      </h3>
-
-      <div className="home__pagination">
-        {pages.map((pageIndex, i) => (
-          <button
-            key={i}
-            onClick={() => paginationHandler(pageIndex)}
-            className="home__pagination__btn"
-          >
-            {pageIndex + 1}
-          </button>
-        ))}
-      </div>
+      <Pagination currentPage={page} setCurrentPage={setPage} data={data} />
     </section>
   );
 };

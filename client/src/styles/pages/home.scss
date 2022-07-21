@@ -250,9 +250,12 @@
   }
 
   &__pagination {
-    display: flex;
-    justify-content: center;
-    margin-top: 1rem;
+    &__items {
+      margin-block: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
     &__btn {
       cursor: pointer;
@@ -268,7 +271,9 @@
       text-align: center;
       transition: all 0.3s ease-in-out;
 
-      &:hover {
+      &--active {
+        background-color: #0071dc;
+        color: #fff;
       }
     }
   }
