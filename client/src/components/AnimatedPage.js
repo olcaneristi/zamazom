@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 
 const AnimatedPage = ({
   children,
+  style,
   className,
   initialValue,
   animateValue,
@@ -15,6 +16,7 @@ const AnimatedPage = ({
   };
   return (
     <motion.div
+      style={style}
       className={className}
       variants={animations}
       initial="initial"

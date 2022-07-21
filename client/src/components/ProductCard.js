@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import StarRating from 'react-svg-star-rating';
 import { useDispatch } from 'react-redux';
-import { addToCart } from 'store/cartSlice';
+import { addToCart } from 'services/cartSlice';
 import CustomModal from './CustomModal';
 import { motion } from 'framer-motion';
-import { motionContainer, motionItem } from 'helper';
+import { motionContainer, motionItem } from 'utils';
 import { Oval } from 'react-loader-spinner';
 import useWindowSize from 'hooks/useWindowSize';
 
