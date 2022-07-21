@@ -15,7 +15,7 @@ const SvgComponent = props => (
         stroke: props?.color || '#FFF',
         strokeLinecap: 'round',
         strokeLinejoin: 'round',
-        strokeWidth: props?.strokeWidth || 5.5,
+        strokeWidth: props?.strokeWidth || 5,
       }}
     />
   </svg>
