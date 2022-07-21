@@ -1,4 +1,16 @@
 .footer {
   border-top: 1px solid #f1f1f2;
-  padding: 1.5rem 0;
+  padding: 1.5rem 1.2rem;
+
+  &__container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__copyright {
+    font-size: 0.85rem;
+    letter-spacing: 0.3px;
+    color: rgba(0, 0, 0, 0.5);
+  }
 }

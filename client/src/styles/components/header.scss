@@ -1,5 +1,5 @@
 .header {
-  padding: 0.5rem 1rem;
+  padding-inline: 1rem;
   background-color: #0071dc;
   //position: sticky;
   //top: 0;
@@ -15,22 +15,73 @@
   &__nav {
     display: flex;
     align-items: center;
+    padding-block: 0.75rem;
+
+    & > a {
+      margin-inline: 0.5rem;
+
+      &:nth-last-child(1) {
+        margin-right: 0;
+      }
+
+      &:nth-child(1) {
+        margin-left: 0;
+      }
+    }
+  }
+
+  &__heading {
+    font-size: 0.69rem;
+    line-height: 1.25;
+    opacity: 0.8;
+  }
+
+  &__bold {
+    padding-top: 0.15rem;
+    font-weight: 700;
+    font-size: 1rem;
   }
 
   &__favorites {
-    margin-right: 1.25rem;
-    border-radius: 5px;
+    border-radius: 0.5rem;
     color: #fff;
     display: flex;
     align-items: center;
-    flex-direction: column;
     justify-content: center;
-    width: 50px;
+    padding: 7px 10px;
+    transition: background 0.15s ease-in-out;
 
-    &__title {
-      margin-top: 0.25rem;
-      font-size: 0.65rem;
-      letter-spacing: 0.25px;
+    &:hover {
+      background-color: #18509b;
+    }
+
+    & > svg {
+      display: flex;
+    }
+
+    &__text {
+      margin-left: 0.4rem;
+    }
+  }
+
+  &__signIn {
+    display: flex;
+    align-items: center;
+    padding: 7px 10px;
+    border-radius: 8px;
+    transition: background 0.15s ease-in-out;
+
+    &:hover {
+      background-color: #18509b;
+    }
+
+    & > svg {
+      display: flex;
+    }
+
+    &__text {
+      margin-left: 0.4rem;
+      color: #fff;
     }
   }
 
@@ -47,8 +98,8 @@
 
     &__count {
       position: absolute;
-      top: -0.5rem;
-      right: 0.1rem;
+      top: -0.4rem;
+      right: 0.25rem;
       font-size: 0.7rem;
       background-color: #ffc220;
       border-radius: 50%;
@@ -63,9 +114,11 @@
     }
 
     &__total {
-      margin-top: 0.3rem;
+      margin-top: 0.2rem;
       letter-spacing: 0.25px;
-      font-size: 0.65rem;
+      font-size: 0.67rem;
+      line-height: 1.25;
+      opacity: 0.8;
     }
   }
 }
