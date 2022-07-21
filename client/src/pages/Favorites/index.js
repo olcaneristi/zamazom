@@ -12,7 +12,7 @@ const Favorites = () => {
   }, [favoritesData, state, dispatch]);
 
   return (
-    <AnimatedPage>
+    <AnimatedPage style={{ minHeight: '90vh' }}>
       {favoritesData?.map(item => (
         <div key={item.id}>
           <h2>{item.name}</h2>
