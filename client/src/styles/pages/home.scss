@@ -69,6 +69,10 @@
       margin: 0 auto;
       padding: 0.5rem;
 
+      @include breakpoint(xs) {
+        min-height: 200px;
+      }
+
       & > picture > img {
         width: 100%;
       }
