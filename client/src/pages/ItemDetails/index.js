@@ -264,6 +264,7 @@ const ItemDetails = () => {
                 </Button>
               )) || (
                 <Button
+                  buttonType="outline"
                   className="details__btn--add-favorites"
                   onClick={() => handleFavoritesCheck(selectedProduct)}
                 >
