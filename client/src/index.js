@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import { Provider } from 'react-redux';
-import { store } from './services';
+import { store } from './services/store';
 import 'swiper/css/bundle';
 
 ReactDOM.render(

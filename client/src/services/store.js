@@ -1,8 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
 import logger from 'redux-logger';
-import cartReducer, { getCartTotal } from './cartSlice';
-import favoritesReducer from './favoriteSlice';
-import authReducer, { authUser } from './authSlice';
+import cartReducer, { getCartTotal } from './slices/cartSlice';
+import favoritesReducer from './slices/favoriteSlice';
+import authReducer, { authUser } from './slices/authSlice';
 import { productsApi } from './productsApi';
 
 export const store = configureStore({
