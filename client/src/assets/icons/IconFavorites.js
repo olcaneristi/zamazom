@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-const SvgComponent = props => (
+const IconFavorites = props => (
   <svg
     width={props?.width || 64}
     height={props?.height || 64}
@@ -21,4 +21,4 @@ const SvgComponent = props => (
   </svg>
 );
 
-export default SvgComponent;
+export default IconFavorites;
