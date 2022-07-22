@@ -1,10 +1,7 @@
-import Logo from 'assets/icons/Logo';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import IconCart from 'assets/icons/IconCart';
-import IconFavorites from 'assets/icons/IconFavorites';
-import IconUser from 'assets/icons/IconUser';
+import { IconCart, IconFavorites, IconUser, Logo } from 'assets/icons';
 
 const Header = () => {
   const { cartTotalAmount, cartItems } = useSelector(state => state.cart);
@@ -31,7 +28,7 @@ const Header = () => {
             <Link to="/profile" className="header__favorites">
               <IconUser color="#FFF" width="20" height="20" />
               <div className="header__signIn__text">
-                <p className="header__heading header__signIn__text--heading">My</p>
+                <p className="header__heading header__signIn__text--heading">Your</p>
                 <p className="header__bold header__signIn__text--bold">Account</p>
               </div>
             </Link>

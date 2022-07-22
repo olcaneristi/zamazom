@@ -1,4 +1,4 @@
-import IconGithub from 'assets/icons/IconGithub';
+import { IconGithub } from 'assets/icons';
 import React from 'react';
 
 const Footer = () => {
