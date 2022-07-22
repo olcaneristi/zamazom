@@ -1,7 +1,7 @@
-import IconStar from 'assets/icons/IconStar';
+import { IconStar } from 'assets/icons';
 import React from 'react';
 
-const ReviewChart = ({ ratings }) => {
+const Chart = ({ ratings }) => {
   const containerStyles = {
     height: 20,
     width: '100%',
@@ -56,4 +56,4 @@ const ReviewChart = ({ ratings }) => {
   );
 };
 
-export default ReviewChart;
+export default Chart;

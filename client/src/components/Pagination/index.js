@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Button from '../Button';
 
 const Pagination = ({ currentPage, setCurrentPage, data }) => {
   const [numberOfPages, setNumberOfPages] = useState(0);
@@ -32,25 +33,26 @@ const Pagination = ({ currentPage, setCurrentPage, data }) => {
   return (
     <div className="home__pagination__items">
       {currentPage > 0 && (
-        <button className="home__pagination__btn" onClick={previousPage}>
+        <Button buttonType="unset" className="home__pagination__arrow" onClick={previousPage}>
           {'<'}
-        </button>
+        </Button>
       )}
       {pages.map((pageIndex, i) => (
-        <button
+        <Button
           key={i}
+          buttonType={currentPage === i ? '' : 'outline'}
           onClick={() => paginationHandler(pageIndex)}
           className={`home__pagination__btn ${
             currentPage === i ? 'home__pagination__btn--active' : ''
           }`}
         >
           {pageIndex + 1}
-        </button>
+        </Button>
       ))}
       {currentPage < numberOfPages - 1 && (
-        <button onClick={nextPage} className="home__pagination__btn">
+        <Button buttonType="unset" onClick={nextPage} className="home__pagination__arrow">
           {'>'}
-        </button>
+        </Button>
       )}
     </div>
   );

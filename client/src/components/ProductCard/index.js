@@ -2,12 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import StarRating from 'react-svg-star-rating';
 import { useDispatch } from 'react-redux';
-import { addToCart } from 'services/cartSlice';
-import CustomModal from './CustomModal';
+import { addToCart } from 'services/slices/cartSlice';
+import CustomModal from '../Modal';
 import { motion } from 'framer-motion';
 import { motionContainer, motionItem } from 'utils';
 import { Oval } from 'react-loader-spinner';
 import useWindowSize from 'hooks/useWindowSize';
+import Button from '../Button';
 
 const ProductCard = ({ data }) => {
   const [isShown, setIsShown] = useState(false);
@@ -63,7 +64,7 @@ const ProductCard = ({ data }) => {
                   className="home__product__variant__item motionItem"
                   variants={motionItem}
                 >
-                  <button
+                  <Button
                     className="home__product__variant__button"
                     onClick={() => handleSelectProduct(item)}
                     style={{
@@ -77,7 +78,7 @@ const ProductCard = ({ data }) => {
                       <source srcSet={data?.coverImage} type="image/webp" />
                       <img src={data?.coverImage} alt={data.name} width="80px" height="80px" />
                     </picture>
-                  </button>
+                  </Button>
                   <p className="home__product__variant__color">{item.color.name}</p>
                 </motion.li>
               ))}
@@ -92,13 +93,14 @@ const ProductCard = ({ data }) => {
             })}
           </span>
 
-          <button
+          <Button
+            buttonType="secondary"
             disabled={!selectedProduct.id || isSubmitLoading}
             className="home__product__variant__summary--btn"
             onClick={() => handleAddToCartAndCloseModal(selectedProduct)}
           >
-            {isSubmitLoading ? <Oval width={16} height={16} color="#000" /> : 'Add to Cart'}
-          </button>
+            {isSubmitLoading ? <Oval width={16} height={16} color="#FFF" /> : 'Add to Cart'}
+          </Button>
         </div>
       </CustomModal>
     );
@@ -160,13 +162,13 @@ const ProductCard = ({ data }) => {
 
       {isShown && (
         <div className="home__product__add-to-cart">
-          <button
+          <Button
             type="button"
             onClick={() => setIsOpen(true)}
             className="home__product__add-to-cart-btn"
           >
             Add to Cart
-          </button>
+          </Button>
         </div>
       )}
 
