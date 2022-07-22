@@ -1,21 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import Lottie from 'react-lottie';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { getCartTotal } from 'services/slices/cartSlice';
-import { AnimatedPage, Loader, Button } from 'components';
-import animationData from 'assets/lotties/shake-a-empty-box';
-import { IconReturn } from 'assets/icons';
+import { AnimatedPage, Loader, Button, NoData } from 'components';
 import CartItem from 'components/CartItem';
-
-const defaultOptions = {
-  loop: true,
-  autoplay: true,
-  animationData: animationData,
-  rendererSettings: {
-    preserveAspectRatio: 'xMidYMid slice',
-  },
-};
+import animationData from 'assets/lotties/shake-a-empty-box';
 
 const Cart = () => {
   const { cartItems, cartTotalAmount, cartTotalTaxes } = useSelector(state => state.cart);
@@ -63,23 +52,11 @@ const Cart = () => {
         {isSubmitLoading && <Loader haveBackground width={50} />}
 
         {(cartItems.length === 0 && (
-          <div className="cart__empty">
-            <Lottie
-              isClickToPauseDisabled={true}
-              options={defaultOptions}
-              style={{ maxWidth: 350 }}
-            />
-            <h2 className="cart__empty__title">Your cart is currently empty!</h2>
-            <p className="cart__empty__description">
-              Looks like you haven't made your choice yet..
-            </p>
-            <Link to="/" className="cart__empty__return">
-              Return to Home
-              <span>
-                <IconReturn width="20" height="20" background="#0071dc" color="#0071dc" />
-              </span>
-            </Link>
-          </div>
+          <NoData
+            animation={animationData}
+            title="Your cart is currently empty!"
+            description="Looks like you haven't made your choice yet.."
+          />
         )) || (
           <>
             <div className="cart__info">
