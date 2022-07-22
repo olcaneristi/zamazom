@@ -13,7 +13,7 @@ const Favorites = () => {
   }, [favoritesData, state, dispatch]);
 
   return (
-    <AnimatedPage className="favorites">
+    <AnimatedPage className={`favorites ${favoritesData.length === 0 ? 'empty' : ''}`}>
       <div className="container">
         {favoritesData.length === 0 ? (
           <NoData

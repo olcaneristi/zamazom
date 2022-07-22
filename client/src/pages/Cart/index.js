@@ -47,8 +47,8 @@ const Cart = () => {
   };
 
   return (
-    <section className="cart">
-      <AnimatedPage className="container">
+    <AnimatedPage className={`cart ${cartItems.length === 0 ? 'empty' : ''}`}>
+      <div className="container">
         {isSubmitLoading && <Loader haveBackground width={50} />}
 
         {(cartItems.length === 0 && (
@@ -126,8 +126,8 @@ const Cart = () => {
             </div>
           </>
         )}
-      </AnimatedPage>
-    </section>
+      </div>
+    </AnimatedPage>
   );
 };
 
