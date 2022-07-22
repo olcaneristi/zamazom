@@ -5,6 +5,7 @@ import IconFavorites from './IconFavorites';
 import IconGithub from './IconGithub';
 import IconMinus from './IconMinus';
 import IconPlus from './IconPlus';
+import IconRemoveFavorites from './IconRemoveFavorites';
 import IconReturn from './IconReturn';
 import IconStar from './IconStar';
 import IconUser from './IconUser';
@@ -19,6 +20,7 @@ export {
   IconGithub,
   IconMinus,
   IconPlus,
+  IconRemoveFavorites,
   IconReturn,
   IconStar,
   IconUser,

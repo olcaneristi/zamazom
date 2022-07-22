@@ -13,7 +13,7 @@ import Fade from 'react-reveal/Fade';
 import moment from 'moment';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import useWindowSize from 'hooks/useWindowSize';
-import { IconFavorites, IconVerified, IconArrowRight } from 'assets/icons';
+import { IconFavorites, IconVerified, IconArrowRight, IconRemoveFavorites } from 'assets/icons';
 
 const ItemDetails = () => {
   const [itemDetail, setItemDetail] = useState([]);
@@ -260,7 +260,7 @@ const ItemDetails = () => {
                   className="details__btn--add-favorites"
                   onClick={() => handleFavoritesCheck(selectedProduct)}
                 >
-                  <IconFavorites color="#0071dc" strokeWidth="3.5" width="32" height="32" />
+                  <IconFavorites color="#0071dc" strokeWidth="5" width="32" height="32" />
                 </Button>
               )) || (
                 <Button
@@ -268,13 +268,7 @@ const ItemDetails = () => {
                   className="details__btn--add-favorites"
                   onClick={() => handleFavoritesCheck(selectedProduct)}
                 >
-                  <IconFavorites
-                    fill="#0071dc"
-                    color="#0071dc"
-                    strokeWidth="3.5"
-                    width="32"
-                    height="32"
-                  />
+                  <IconRemoveFavorites fill="#0071dc" color="#0071dc" width="32" height="32" />
                 </Button>
               )}
             </div>
