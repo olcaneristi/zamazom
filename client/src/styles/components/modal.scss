@@ -8,7 +8,12 @@
   overflow: auto;
   border-radius: 8px;
   outline: none;
-  max-width: calc(80% - 20px);
+  width: 450px;
+
+  @include breakpoint(xs) {
+    width: 90%;
+    max-height: 320px;
+  }
 
   &__overlay {
     position: fixed;

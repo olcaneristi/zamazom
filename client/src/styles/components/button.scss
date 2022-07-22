@@ -1,1 +1,47 @@
-//
+.button {
+  all: unset;
+  cursor: pointer;
+  border-radius: 0.5rem;
+  border: 1px solid transparent;
+  background-color: #0071dc;
+  color: #fff;
+  width: -webkit-fill-available;
+  padding: 1rem;
+  word-wrap: break-word;
+  text-align: center;
+  font-size: 0.85rem;
+  font-weight: 700;
+  transition: all 0.3s ease-in-out;
+  letter-spacing: 0.25px;
+
+  &:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    color: rgb(219, 219, 219);
+  }
+
+  &__secondary {
+    background-color: rgb(11, 28, 58);
+  }
+
+  &__outline {
+    border: 1px solid #0071dc;
+    background-color: transparent;
+    color: #0071dc;
+
+    &:disabled {
+      color: #5b9bd7;
+    }
+  }
+
+  &__only__text {
+    background-color: transparent;
+    border: none;
+    text-align: left;
+    padding: 0;
+    width: fit-content;
+    font-size: 0.8rem;
+    color: rgb(183, 183, 183);
+    text-decoration: underline;
+  }
+}
