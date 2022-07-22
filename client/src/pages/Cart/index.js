@@ -1,18 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
 import Lottie from 'react-lottie';
-import {
-  addToCart,
-  decreaseCartItem,
-  getCartTotal,
-  removeFromCart,
-} from 'services/slices/cartSlice';
+import { getCartTotal } from 'services/slices/cartSlice';
 import { AnimatedPage, Loader, Button } from 'components';
-import { motionContainer, motionItem } from 'utils';
 import animationData from 'assets/lotties/shake-a-empty-box';
-import { IconMinus, IconPlus, IconReturn } from 'assets/icons';
+import { IconReturn } from 'assets/icons';
+import CartItem from 'components/CartItem';
 
 const defaultOptions = {
   loop: true,
@@ -24,7 +18,7 @@ const defaultOptions = {
 };
 
 const Cart = () => {
-  const state = useSelector(state => state.cart);
+  const { cartItems, cartTotalAmount, cartTotalTaxes } = useSelector(state => state.cart);
   const { isAuthenticated } = useSelector(state => state.auth);
   const dispatch = useDispatch();
   let navigate = useNavigate();
@@ -33,7 +27,7 @@ const Cart = () => {
 
   useEffect(() => {
     dispatch(getCartTotal());
-  }, [state, dispatch]);
+  }, [cartItems, cartTotalAmount, cartTotalTaxes, dispatch]);
 
   const checkoutHandler = () => {
     setIsSubmitLoading(true);
@@ -52,33 +46,9 @@ const Cart = () => {
     }
   };
 
-  const handleRemoveFromCart = item => {
-    setIsSubmitLoading(true);
-    setTimeout(() => {
-      dispatch(removeFromCart(item));
-      setIsSubmitLoading(false);
-    }, 500);
-  };
-
-  const handleIncreaseQuantity = item => {
-    setIsSubmitLoading(true);
-    setTimeout(() => {
-      dispatch(addToCart(item));
-      setIsSubmitLoading(false);
-    }, 500);
-  };
-
-  const handleDecreaseQuantity = item => {
-    setIsSubmitLoading(true);
-    setTimeout(() => {
-      dispatch(decreaseCartItem(item));
-      setIsSubmitLoading(false);
-    }, 500);
-  };
-
   const calculateTotalDiscounts = () => {
     let totalDiscount = 0;
-    const checkDiscount = state.cartItems.filter(item => item.isPriceRange !== item.wasPriceRange);
+    const checkDiscount = cartItems.filter(item => item.isPriceRange !== item.wasPriceRange);
 
     const totalDiscountInitial = checkDiscount.reduce((acc, item) => {
       return acc + (item.wasPriceRange - item.isPriceRange) * item.quantity;
@@ -92,7 +62,7 @@ const Cart = () => {
       <AnimatedPage className="container">
         {isSubmitLoading && <Loader haveBackground width={50} />}
 
-        {(state?.cartItems.length === 0 && (
+        {(cartItems.length === 0 && (
           <div className="cart__empty">
             <Lottie
               isClickToPauseDisabled={true}
@@ -115,85 +85,16 @@ const Cart = () => {
             <div className="cart__info">
               <h2>Cart</h2>
               <span>
-                ({state?.cartItems?.length} {state?.cartItems?.length === 1 ? 'item' : 'items'})
+                ({cartItems?.length} {cartItems?.length === 1 ? 'item' : 'items'})
               </span>
             </div>
             <div className="cart__container">
-              <div className="cart__items">
-                <motion.ul variants={motionContainer} initial="hidden" animate="visible">
-                  {state?.cartItems?.map((item, index) => (
-                    <motion.li
-                      variants={motionItem}
-                      key={index}
-                      className="cart__items__list motionItem"
-                      transition={{ duration: 0.5 }}
-                    >
-                      <div className="cart__items__list--left">
-                        <div className="cart__items__list__img">
-                          <Link to={`/products/${item.slug}`}>
-                            <picture>
-                              <source srcSet={item?.coverImage} type="image/webp" />
-                              <img src={item.coverImage} alt={item.name} />
-                            </picture>
-                          </Link>
-                        </div>
-                        <div className="cart__items__list__content">
-                          <div className="cart__items__list__content__name">
-                            <Link to={`/products/${item.slug}`}>{item.name}</Link>
-                          </div>
-                          {item?.color && (
-                            <p className="cart__items__list__content__color">
-                              Color: <span>{item.color.name}</span>
-                            </p>
-                          )}
-                          <div className="home__product__price">
-                            <div className="home__product__price--regular">
-                              {item.wasPriceRange !== item.isPriceRange && (
-                                <span className="home__product__price--regular-text">
-                                  {item.wasPriceRange.toLocaleString('en-US', {
-                                    style: 'currency',
-                                    currency: 'USD',
-                                  })}
-                                </span>
-                              )}
-                            </div>
+              <CartItem
+                dispatch={dispatch}
+                setIsSubmitLoading={setIsSubmitLoading}
+                state={cartItems}
+              />
 
-                            <div className="home__product__price--sale">
-                              <span className="home__product__price--sale-text-normal">
-                                {item.isPriceRange.toLocaleString('en-US', {
-                                  style: 'currency',
-                                  currency: 'USD',
-                                })}
-                              </span>
-                            </div>
-                          </div>
-                          <Button buttonType="text" onClick={() => handleRemoveFromCart(item)}>
-                            Remove
-                          </Button>
-                        </div>
-                      </div>
-
-                      <div className="cart__items__list__quantity">
-                        <Button
-                          buttonType="unset"
-                          className="cart__items__list__quantity--increase"
-                          onClick={() => handleIncreaseQuantity(item)}
-                        >
-                          <IconPlus />
-                        </Button>
-                        <input type="number" value={item.quantity} readOnly />
-                        <Button
-                          buttonType="unset"
-                          className="cart__items__list__quantity--decrease"
-                          onClick={() => handleDecreaseQuantity(item)}
-                        >
-                          <IconMinus />
-                        </Button>
-                      </div>
-                    </motion.li>
-                  ))}
-                </motion.ul>
-              </div>
               <div className="cart__checkout">
                 <div className="cart__checkout__container">
                   <div className="cart__checkout__continue">
@@ -205,17 +106,14 @@ const Cart = () => {
                     <div className="cart__checkout__summary--subtotal">
                       <span>Subtotal</span>
                       <span>
-                        {(state?.cartTotalAmount + calculateTotalDiscounts()).toLocaleString(
-                          'en-US',
-                          {
-                            style: 'currency',
-                            currency: 'USD',
-                          },
-                        )}
+                        {(cartTotalAmount + calculateTotalDiscounts()).toLocaleString('en-US', {
+                          style: 'currency',
+                          currency: 'USD',
+                        })}
                       </span>
                     </div>
-                    {state?.cartItems?.filter(item => item.isPriceRange !== item.wasPriceRange)
-                      .length > 0 && (
+                    {cartItems?.filter(item => item.isPriceRange !== item.wasPriceRange).length >
+                      0 && (
                       <div className="cart__checkout__summary--discount">
                         <span>Discount</span>
                         <span className="cart__checkout__summary--discount-value">
@@ -230,7 +128,7 @@ const Cart = () => {
                     <div className="cart__checkout__summary--taxes">
                       <span>Taxes</span>
                       <span>
-                        {state?.cartTotalTaxes?.toLocaleString('en-US', {
+                        {cartTotalTaxes?.toLocaleString('en-US', {
                           style: 'currency',
                           currency: 'USD',
                         })}
@@ -240,7 +138,7 @@ const Cart = () => {
                   <div className="cart__checkout__estimated__total">
                     <span>Estimated total</span>
                     <span>
-                      {(state?.cartTotalAmount + state?.cartTotalTaxes).toLocaleString('en-US', {
+                      {(cartTotalAmount + cartTotalTaxes).toLocaleString('en-US', {
                         style: 'currency',
                         currency: 'USD',
                       })}
