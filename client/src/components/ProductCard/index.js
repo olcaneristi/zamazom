@@ -9,6 +9,8 @@ import { motionContainer, motionItem } from 'utils';
 import { Oval } from 'react-loader-spinner';
 import useWindowSize from 'hooks/useWindowSize';
 import Button from '../Button';
+import { IconFavorites, IconRemoveFavorites } from 'assets/icons';
+import { removeFromFavorites } from 'services/slices/favoriteSlice';
 
 const ProductCard = ({ data }) => {
   const [isShown, setIsShown] = useState(false);
@@ -20,6 +22,10 @@ const ProductCard = ({ data }) => {
 
   const handleSelectProduct = item => {
     setSelectedProduct(item);
+  };
+
+  const handleFavoritesCheck = data => {
+    dispatch(removeFromFavorites(data));
   };
 
   useEffect(() => {
@@ -46,6 +52,14 @@ const ProductCard = ({ data }) => {
     width > 768 && setIsShown(false);
   };
 
+  const addToCartHandler = () => {
+    if (data?.variantList) {
+      setIsOpen(true);
+    } else {
+      dispatch(addToCart(data));
+    }
+  };
+
   const openSelectProductModal = data => {
     return (
       <CustomModal isOpen={isOpen} onRequestClose={() => setIsOpen(false)}>
@@ -57,7 +71,7 @@ const ProductCard = ({ data }) => {
             initial="hidden"
             animate="visible"
           >
-            {data &&
+            {data?.variantList &&
               data.variantList.map((item, index) => (
                 <motion.li
                   key={index}
@@ -108,6 +122,14 @@ const ProductCard = ({ data }) => {
 
   return (
     <li className="home__product" onMouseEnter={handleEnterMouse} onMouseLeave={handleLeaveMouse}>
+      {!data?.variantList && (
+        <Button
+          className="details__btn--add-favorites favorites__btn"
+          onClick={() => handleFavoritesCheck(data)}
+        >
+          <IconRemoveFavorites fill="#fff" width="26" height="26" />
+        </Button>
+      )}
       <Link className="home__product__element" to={`/products/${data?.slug}`}>
         <div className="home__product__img">
           <picture>
@@ -120,6 +142,12 @@ const ProductCard = ({ data }) => {
             <span className="home__product__title">{data.title}</span>
             <span className="home__product__name">{data.name}</span>
           </div>
+
+          {data?.color && (
+            <p className="cart__items__list__content__color">
+              Color: <span>{data.color.name}</span>
+            </p>
+          )}
 
           <div className="home__product__price">
             <div className="home__product__price--regular">
@@ -148,15 +176,19 @@ const ProductCard = ({ data }) => {
             </div>
           </div>
 
-          <div className="home__product__rating">
-            <StarRating
-              unit="half"
-              initialRating={data.rating}
-              isReadOnly
-              starClassName="home__product__rating--star"
-            />
-            <span className="home__product__rating--count">{`(${data.ratingCount})`}</span>
-          </div>
+          {data.variantList ? (
+            <div className="home__product__rating">
+              <StarRating
+                unit="half"
+                initialRating={data.rating}
+                isReadOnly
+                starClassName="home__product__rating--star"
+              />
+              <span className="home__product__rating--count">{`(${data.ratingCount})`}</span>
+            </div>
+          ) : (
+            <div className="home__product__rating--empty" />
+          )}
         </div>
       </Link>
 
@@ -164,7 +196,7 @@ const ProductCard = ({ data }) => {
         <div className="home__product__add-to-cart">
           <Button
             type="button"
-            onClick={() => setIsOpen(true)}
+            onClick={addToCartHandler}
             className="home__product__add-to-cart-btn"
           >
             Add to Cart
