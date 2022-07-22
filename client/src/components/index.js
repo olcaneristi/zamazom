@@ -4,7 +4,8 @@ import Chart from './Chart';
 import Input from './Input';
 import Loader from './Loader';
 import Modal from './Modal';
+import Navbar from './Navbar';
 import Pagination from './Pagination';
 import ProductCard from './ProductCard';
 
-export { AnimatedPage, Button, Chart, Input, Loader, Modal, Pagination, ProductCard };
+export { AnimatedPage, Button, Chart, Input, Loader, Modal, Navbar, Pagination, ProductCard };
