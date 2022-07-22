@@ -9,7 +9,7 @@ import { motionContainer, motionItem } from 'utils';
 import { Oval } from 'react-loader-spinner';
 import useWindowSize from 'hooks/useWindowSize';
 import Button from '../Button';
-import { IconFavorites, IconRemoveFavorites } from 'assets/icons';
+import { IconRemoveFavorites } from 'assets/icons';
 import { removeFromFavorites } from 'services/slices/favoriteSlice';
 
 const ProductCard = ({ data }) => {
