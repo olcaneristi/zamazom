@@ -96,6 +96,12 @@
     cursor: pointer;
     flex-direction: column;
 
+    &__count {
+      padding-top: 0.1rem;
+      font-size: 0.8rem;
+      color: rgba(0, 0, 0, 0.7);
+    }
+
     &__star {
       display: flex;
       align-items: center;
@@ -119,40 +125,13 @@
     display: flex;
     margin-top: 2rem;
 
-    &--add-to-cart {
-      background-color: #0071dc;
-      width: 100%;
-      cursor: pointer;
-      border-radius: 0.5rem;
-      height: 2.75rem;
+    &--add-favorites {
+      width: unset;
       padding: 0 1.5rem;
-      color: #fff;
-      font-size: 0.85rem;
-      letter-spacing: 0.25px;
-      font-weight: 700;
-      margin-bottom: 1rem;
       display: flex;
       align-items: center;
       justify-content: center;
-
-      &:disabled {
-        background-color: #bebec0;
-        color: rgb(238, 237, 237);
-        cursor: not-allowed;
-      }
-    }
-
-    &--add-favorites {
-      background-color: transparent;
-      border: 1px solid #0071dc;
       margin-left: 1rem;
-      cursor: pointer;
-      border-radius: 0.5rem;
-      height: 2.75rem;
-      padding: 0 1.5rem;
-      font-size: 0.85rem;
-      letter-spacing: 0.25px;
-      font-weight: 700;
 
       &:disabled {
         border: 1px solid gray;
@@ -284,17 +263,9 @@
 
       &__all {
         margin-top: 1rem;
+        display: flex;
 
         &--btn {
-          border: 1px solid #0071dc;
-          cursor: pointer;
-          border-radius: 0.5rem;
-          padding: 0.75rem 1rem;
-          font-size: 0.85rem;
-          letter-spacing: 0.25px;
-          font-weight: 700;
-          color: #0071dc;
-          width: 100%;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -303,7 +274,7 @@
             padding: 0.75rem 0.75rem;
           }
 
-          & > span > svg {
+          & > span {
             display: flex;
           }
         }
