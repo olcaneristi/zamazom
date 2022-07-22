@@ -1,4 +1,4 @@
-import AnimatedPage from 'components/AnimatedPage';
+import { AnimatedPage } from 'components';
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 

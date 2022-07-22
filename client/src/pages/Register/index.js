@@ -1,9 +1,8 @@
-import AnimatedPage from 'components/AnimatedPage';
-import Input from 'components/Input';
+import { AnimatedPage, Button, Input } from 'components';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate, useLocation } from 'react-router-dom';
-import { register } from 'services/authSlice';
+import { register } from 'services/slices/authSlice';
 
 const Register = () => {
   const { status, error, isAuthenticated } = useSelector(state => state.auth);
@@ -37,12 +36,14 @@ const Register = () => {
           onChange={handleChange}
           name="name"
           type="text"
+          value={user.name}
           placeholder="Name"
           labelText="Name"
         />
         <Input
           name="email"
           type="email"
+          value={user.email}
           placeholder="Email"
           onChange={handleChange}
           labelText="Email"
@@ -50,13 +51,14 @@ const Register = () => {
         <Input
           name="password"
           type="password"
+          value={user.password}
           placeholder="Password"
           onChange={handleChange}
           labelText="Password"
         />
-        <button type="submit" disabled={!(user.name, user.email, user.password)}>
-          {status === 'loading' ? 'Loading...' : 'Register'}
-        </button>
+        <Button type="submit" disabled={!(user.name && user.email && user.password)}>
+          {status === 'loading' ? 'Registering...' : 'Register'}
+        </Button>
       </form>
     </AnimatedPage>
   );

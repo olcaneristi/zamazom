@@ -1,23 +1,19 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import StarRating from 'react-svg-star-rating';
-import { addToCart } from 'services/cartSlice';
+import { addToCart } from 'services/slices/cartSlice';
 import { useGetProductByIdQuery } from 'services/productsApi';
-import IconFavorites from 'assets/icons/IconFavorites';
-import AnimatedPage from 'components/AnimatedPage';
+import { AnimatedPage, Button, Chart, Loader } from 'components';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { FreeMode, Navigation, Thumbs } from 'swiper';
 import { motion } from 'framer-motion';
 import { motionContainer, motionItem } from 'utils';
-import { addToFavorites, removeFromFavorites } from 'services/favoriteSlice';
+import { addToFavorites, removeFromFavorites } from 'services/slices/favoriteSlice';
 import Fade from 'react-reveal/Fade';
 import moment from 'moment';
-import Loader from 'components/Loader';
-import ReviewChart from 'components/ReviewChart';
-import IconVerified from 'assets/icons/IconVerified';
-import IconArrowRight from 'assets/icons/IconArrowRight';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import useWindowSize from 'hooks/useWindowSize';
+import { IconFavorites, IconVerified, IconArrowRight } from 'assets/icons';
 
 const ItemDetails = () => {
   const [itemDetail, setItemDetail] = useState([]);
@@ -207,7 +203,7 @@ const ItemDetails = () => {
                 </div>
               </div>
 
-              <button className="details__rating" onClick={handleScrollRef}>
+              <div className="details__rating" onClick={handleScrollRef}>
                 <div className="details__rating__star">
                   <span className="details__rating__star--count">{item?.rating}</span>
                   <StarRating
@@ -221,7 +217,7 @@ const ItemDetails = () => {
                 <div className="details__rating__count">
                   <span> {`${item?.ratingCount} Reviews`}</span>
                 </div>
-              </button>
+              </div>
             </div>
 
             <div className="details__description">Color: {selectedProduct?.color.name}</div>
@@ -239,7 +235,7 @@ const ItemDetails = () => {
                   className="home__product__variant__item motionItem"
                   variants={motionItem}
                 >
-                  <button
+                  <Button
                     className={`home__product__variant__button ${
                       selectedProduct?.id === variant.id
                         ? 'home__product__variant__button--selected'
@@ -251,27 +247,23 @@ const ItemDetails = () => {
                       <source srcSet={variant.coverImage} type="image/webp" />
                       <img src={variant.coverImage} alt={variant.name} width="50" />
                     </picture>
-                  </button>
+                  </Button>
                   <p className="home__product__variant__color">{variant.color.name}</p>
                 </motion.li>
               ))}
             </motion.ul>
             <div className="details__btn">
-              <button
-                className="details__btn--add-to-cart"
-                onClick={() => handleAddToCart(selectedProduct)}
-              >
-                Add to Cart
-              </button>
+              <Button onClick={() => handleAddToCart(selectedProduct)}>Add to Cart</Button>
               {(!isFavorite && (
-                <button
+                <Button
+                  buttonType="outline"
                   className="details__btn--add-favorites"
                   onClick={() => handleFavoritesCheck(selectedProduct)}
                 >
                   <IconFavorites color="#0071dc" strokeWidth="3.5" width="32" height="32" />
-                </button>
+                </Button>
               )) || (
-                <button
+                <Button
                   className="details__btn--add-favorites"
                   onClick={() => handleFavoritesCheck(selectedProduct)}
                 >
@@ -282,7 +274,7 @@ const ItemDetails = () => {
                     width="32"
                     height="32"
                   />
-                </button>
+                </Button>
               )}
             </div>
           </div>
@@ -337,7 +329,11 @@ const ItemDetails = () => {
               </div>
 
               <div className="details__reviews__rating__all">
-                <button type="button" className="details__reviews__rating__all--btn">
+                <Button
+                  type="button"
+                  buttonType="outline"
+                  className="details__reviews__rating__all--btn"
+                >
                   View all reviews{' '}
                   {width > 768 &&
                     itemDetail &&
@@ -345,14 +341,14 @@ const ItemDetails = () => {
                   <span>
                     <IconArrowRight width="18" height="18" color="#0071dc" />
                   </span>
-                </button>
+                </Button>
               </div>
             </div>
 
             <div className="details__reviews__rating__chart">
               {itemDetail &&
                 itemDetail[0]?.properties?.customerReviews?.ratingDetails?.map((item, index) => (
-                  <ReviewChart ratings={item} key={index} />
+                  <Chart ratings={item} key={index} />
                 ))}
             </div>
           </div>

@@ -1,16 +1,18 @@
-import IconMinus from 'assets/icons/IconMinus';
-import IconPlus from 'assets/icons/IconPlus';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { addToCart, decreaseCartItem, getCartTotal, removeFromCart } from 'services/cartSlice';
-import AnimatedPage from 'components/AnimatedPage';
-import { motionContainer, motionItem } from 'utils';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import Lottie from 'react-lottie';
+import {
+  addToCart,
+  decreaseCartItem,
+  getCartTotal,
+  removeFromCart,
+} from 'services/slices/cartSlice';
+import { AnimatedPage, Loader, Button } from 'components';
+import { motionContainer, motionItem } from 'utils';
 import animationData from 'assets/lotties/shake-a-empty-box';
-import Loader from 'components/Loader';
-import IconReturn from 'assets/icons/IconReturn';
+import { IconMinus, IconPlus, IconReturn } from 'assets/icons';
 
 const defaultOptions = {
   loop: true,
@@ -23,12 +25,32 @@ const defaultOptions = {
 
 const Cart = () => {
   const state = useSelector(state => state.cart);
+  const { isAuthenticated } = useSelector(state => state.auth);
   const dispatch = useDispatch();
+  let navigate = useNavigate();
+  const { pathname } = useLocation();
   const [isSubmitLoading, setIsSubmitLoading] = useState(false);
 
   useEffect(() => {
     dispatch(getCartTotal());
   }, [state, dispatch]);
+
+  const checkoutHandler = () => {
+    setIsSubmitLoading(true);
+    if (isAuthenticated) {
+      setTimeout(() => {
+        setIsSubmitLoading(false);
+      }, 2000);
+    } else {
+      setIsSubmitLoading(false);
+      navigate('/login', {
+        replace: true,
+        state: {
+          from: pathname,
+        },
+      });
+    }
+  };
 
   const handleRemoveFromCart = item => {
     setIsSubmitLoading(true);
@@ -145,29 +167,28 @@ const Cart = () => {
                               </span>
                             </div>
                           </div>
-                          <button
-                            className="cart__items__list__content__remove"
-                            onClick={() => handleRemoveFromCart(item)}
-                          >
+                          <Button buttonType="text" onClick={() => handleRemoveFromCart(item)}>
                             Remove
-                          </button>
+                          </Button>
                         </div>
                       </div>
 
                       <div className="cart__items__list__quantity">
-                        <button
+                        <Button
+                          buttonType="unset"
                           className="cart__items__list__quantity--increase"
                           onClick={() => handleIncreaseQuantity(item)}
                         >
                           <IconPlus />
-                        </button>
+                        </Button>
                         <input type="number" value={item.quantity} readOnly />
-                        <button
+                        <Button
+                          buttonType="unset"
                           className="cart__items__list__quantity--decrease"
                           onClick={() => handleDecreaseQuantity(item)}
                         >
                           <IconMinus />
-                        </button>
+                        </Button>
                       </div>
                     </motion.li>
                   ))}
@@ -176,9 +197,9 @@ const Cart = () => {
               <div className="cart__checkout">
                 <div className="cart__checkout__container">
                   <div className="cart__checkout__continue">
-                    <button type="submit" className="cart__checkout__button">
+                    <Button type="submit" onClick={checkoutHandler}>
                       Continue to checkout
-                    </button>
+                    </Button>
                   </div>
                   <div className="cart__checkout__summary">
                     <div className="cart__checkout__summary--subtotal">

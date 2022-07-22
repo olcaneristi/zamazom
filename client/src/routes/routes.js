@@ -1,8 +1,7 @@
 import { Home, Cart, ItemDetails, NotFound, Favorites, Login, Register, Profile } from 'pages';
-import { Header, Footer } from 'layout';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import PrivateRoute from 'routes/PrivateRoute';
-import { Toaster } from 'react-hot-toast';
+import { Header, Footer } from 'layout';
 
 const routes = [
   {
@@ -47,7 +46,6 @@ const routes = [
 const MainRouter = () => {
   return (
     <Router>
-      <Toaster />
       <Header />
       <Routes>
         {routes.map((route, index) => {

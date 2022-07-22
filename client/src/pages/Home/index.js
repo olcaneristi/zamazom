@@ -1,8 +1,6 @@
-import ProductCard from 'components/ProductCard';
 import React, { useState } from 'react';
 import { useGetAllProductsQuery } from 'services/productsApi';
-import Loader from 'components/Loader';
-import Pagination from 'components/Pagination';
+import { Loader, Pagination, ProductCard } from 'components';
 
 const Home = () => {
   const [page, setPage] = useState(0);
