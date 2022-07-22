@@ -2,42 +2,6 @@
   padding: 2rem 1rem;
   min-height: 90vh;
 
-  &__empty {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    text-align: center;
-
-    &__title {
-      margin: 1.1rem 0 0.75rem 0;
-      color: black;
-    }
-
-    &__description {
-      color: rgba(0, 0, 0, 0.55);
-      font-size: 0.8rem;
-      margin-bottom: 1.5rem;
-    }
-
-    &__return {
-      border: 1px solid #0071dc;
-      color: #0071dc;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 0.5rem;
-      height: 2.75rem;
-      padding: 0 1.5rem;
-      font-size: 0.85rem;
-
-      & > span > svg {
-        display: flex;
-        margin-left: 0.5rem;
-      }
-    }
-  }
-
   &__info {
     justify-content: flex-start;
     display: flex;
