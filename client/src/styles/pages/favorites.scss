@@ -1,0 +1,28 @@
+.favorites {
+  min-height: 90vh;
+  padding: 4rem 1rem;
+
+  &__title {
+    margin: 2rem 1rem 1.5rem 1rem;
+  }
+  &__list {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 100%;
+    margin: 0 auto;
+  }
+
+  &__btn {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    padding: 0.25rem;
+    border-radius: 8px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+    transition: transform 0.25s ease-in-out;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+}

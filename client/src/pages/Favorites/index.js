@@ -1,6 +1,7 @@
-import { AnimatedPage } from 'components';
+import { AnimatedPage, NoData, ProductCard } from 'components';
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import noFavoritesData from 'assets/lotties/no-favorites-found.json';
 
 const Favorites = () => {
   const state = useSelector(state => state.favorites);
@@ -12,13 +13,25 @@ const Favorites = () => {
   }, [favoritesData, state, dispatch]);
 
   return (
-    <AnimatedPage style={{ minHeight: '90vh' }}>
-      {favoritesData?.map(item => (
-        <div key={item.id}>
-          <h2>{item.name}</h2>
-          {item.color && <p>Color: {item.color.name}</p>}
-        </div>
-      ))}
+    <AnimatedPage className="favorites">
+      <div className="container">
+        {favoritesData.length === 0 ? (
+          <NoData
+            animation={noFavoritesData}
+            title="Your favorites are currently empty."
+            description="Looks like you haven't liked any product yet.."
+          />
+        ) : (
+          <>
+            <h2 className="favorites__title">Your Favorites</h2>
+            <ul className="favorites__list">
+              {favoritesData?.map(item => (
+                <ProductCard data={item} key={item?.id} />
+              ))}
+            </ul>
+          </>
+        )}
+      </div>
     </AnimatedPage>
   );
 };
