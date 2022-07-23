@@ -1,5 +1,5 @@
 <div align="center">
-  <h3 text-transform="underline"> MERN stack (MongoDB, Express, React, Node.js) blog app with Redux Toolkit. </h3>
+  <h3 text-transform="underline"> MERN stack (MongoDB, Express, React, Node.js) E-Commerce app with Redux Toolkit. </h3>
 </div>
 
 <p align="center">
