@@ -1,9 +1,19 @@
 import React from 'react';
 import Lottie from 'react-lottie';
-import { IconReturn } from 'assets/icons';
+import { IconReturn, IconReload } from 'assets/icons';
 import { Link } from 'react-router-dom';
+import Button from 'components/Button';
 
-const NoData = ({ title, description, animation, returnPath, pathDescription }) => {
+const NoData = ({
+  title,
+  description,
+  animation,
+  returnPath,
+  pathDescription,
+  reload,
+  reloadRequest,
+  reloadText,
+}) => {
   const defaultOptions = {
     loop: true,
     autoplay: true,
@@ -18,12 +28,21 @@ const NoData = ({ title, description, animation, returnPath, pathDescription }) 
       <Lottie isClickToPauseDisabled={true} options={defaultOptions} style={{ maxWidth: 350 }} />
       <h2 className="empty__item__title">{title}</h2>
       <p className="empty__item__description">{description}</p>
-      <Link to={returnPath || '/'} className="empty__item__return">
-        {pathDescription || 'Return to Home'}
-        <span>
-          <IconReturn width="20" height="20" background="#0071dc" color="#0071dc" />
-        </span>
-      </Link>
+      {(reload && (
+        <Button buttonType="outline" onClick={reloadRequest} className="empty__item__return">
+          {reloadText}
+          <span>
+            <IconReload width="18" height="18" fill="#0071dc" />
+          </span>
+        </Button>
+      )) || (
+        <Link to={returnPath || '/'} className="empty__item__return">
+          {pathDescription || 'Return to Home'}
+          <span>
+            <IconReturn width="20" height="20" background="#0071dc" color="#0071dc" />
+          </span>
+        </Link>
+      )}
     </div>
   );
 };

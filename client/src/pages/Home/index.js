@@ -1,15 +1,25 @@
 import React, { useState } from 'react';
 import { useGetAllProductsQuery } from 'services/api/productsApi';
-import { Loader, Pagination, ProductCard } from 'components';
+import { Loader, NoData, Pagination, ProductCard } from 'components';
+import fetchError from 'assets/lotties/fetch-error.json';
 
 const Home = () => {
   const [page, setPage] = useState(0);
   const { data, error, isFetching } = useGetAllProductsQuery(page);
 
   if (error) {
+    const reloadHandler = () => {
+      window.location.reload();
+    };
     return (
-      <div>
-        <h1>{error.error}</h1>
+      <div className="error">
+        <NoData
+          animation={fetchError}
+          title={error.error}
+          reload
+          reloadRequest={reloadHandler}
+          reloadText="Try Again"
+        />
       </div>
     );
   }
