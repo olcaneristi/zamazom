@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useGetAllProductsQuery } from 'services/productsApi';
+import { useGetAllProductsQuery } from 'services/api/productsApi';
 import { Loader, Pagination, ProductCard } from 'components';
 
 const Home = () => {

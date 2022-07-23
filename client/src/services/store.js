@@ -3,7 +3,7 @@ import logger from 'redux-logger';
 import cartReducer, { getCartTotal } from './slices/cartSlice';
 import favoritesReducer from './slices/favoriteSlice';
 import authReducer, { authUser } from './slices/authSlice';
-import { productsApi } from './productsApi';
+import { productsApi } from './api/productsApi';
 
 export const store = configureStore({
   reducer: {

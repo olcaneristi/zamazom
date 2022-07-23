@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import StarRating from 'react-svg-star-rating';
 import { addToCart } from 'services/slices/cartSlice';
-import { useGetProductByIdQuery } from 'services/productsApi';
+import { useGetProductByIdQuery } from 'services/api/productsApi';
 import { AnimatedPage, Button, Chart, Loader } from 'components';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { FreeMode, Navigation, Thumbs } from 'swiper';
