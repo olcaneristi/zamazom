@@ -1,0 +1,22 @@
+.pagination {
+  margin-block: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &__btn {
+    margin: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1rem;
+    padding: 0.6rem;
+    min-height: unset;
+  }
+
+  &__arrow {
+    padding: 0.5rem;
+    font-size: 1.4rem;
+    cursor: pointer;
+  }
+}

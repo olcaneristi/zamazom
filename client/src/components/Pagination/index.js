@@ -31,9 +31,9 @@ const Pagination = ({ currentPage, setCurrentPage, data }) => {
   };
 
   return (
-    <div className="home__pagination__items">
+    <div className="pagination">
       {currentPage > 0 && (
-        <Button buttonType="unset" className="home__pagination__arrow" onClick={previousPage}>
+        <Button buttonType="unset" className="pagination__arrow" onClick={previousPage}>
           {'<'}
         </Button>
       )}
@@ -42,15 +42,13 @@ const Pagination = ({ currentPage, setCurrentPage, data }) => {
           key={i}
           buttonType={currentPage === i ? '' : 'outline'}
           onClick={() => paginationHandler(pageIndex)}
-          className={`home__pagination__btn ${
-            currentPage === i ? 'home__pagination__btn--active' : ''
-          }`}
+          className={`pagination__btn ${currentPage === i ? 'pagination__btn--active' : ''}`}
         >
           {pageIndex + 1}
         </Button>
       ))}
       {currentPage < numberOfPages - 1 && (
-        <Button buttonType="unset" onClick={nextPage} className="home__pagination__arrow">
+        <Button buttonType="unset" onClick={nextPage} className="pagination__arrow">
           {'>'}
         </Button>
       )}
