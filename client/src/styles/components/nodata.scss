@@ -10,6 +10,7 @@
     justify-content: center;
     flex-direction: column;
     text-align: center;
+    padding-inline: 1rem;
 
     &__title {
       margin: 1.1rem 0 0.75rem 0;
@@ -34,6 +35,11 @@
       height: 2.75rem;
       padding: 0 1.5rem;
       font-size: 0.85rem;
+      transition: all 0.3s ease-in-out;
+
+      &:hover {
+        background-color: #eef3f7;
+      }
 
       & > span > svg {
         display: flex;

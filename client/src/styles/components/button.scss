@@ -14,6 +14,10 @@
   transition: all 0.3s ease-in-out;
   letter-spacing: 0.25px;
 
+  &:hover {
+    background-color: #0160b8;
+  }
+
   &:disabled {
     opacity: 0.7;
     cursor: not-allowed;
@@ -22,12 +26,20 @@
 
   &__secondary {
     background-color: rgb(11, 28, 58);
+
+    &:hover {
+      background-color: rgb(0, 0, 0);
+    }
   }
 
   &__outline {
     border: 1px solid #0071dc;
     background-color: transparent;
     color: #0071dc;
+
+    &:hover {
+      background-color: #eef3f7;
+    }
 
     &:disabled {
       color: #5b9bd7;
@@ -43,5 +55,10 @@
     font-size: 0.8rem;
     color: rgb(183, 183, 183);
     text-decoration: underline;
+
+    &:hover {
+      color: rgb(126, 126, 126);
+      background-color: transparent;
+    }
   }
 }

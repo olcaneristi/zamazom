@@ -216,6 +216,10 @@
         padding: 0.5rem;
         background-color: transparent;
 
+        &:hover {
+          background-color: transparent;
+        }
+
         &--selected {
           border: 1.5px solid black;
         }
@@ -276,4 +280,11 @@
   to {
     opacity: 1;
   }
+}
+
+.error {
+  min-height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
