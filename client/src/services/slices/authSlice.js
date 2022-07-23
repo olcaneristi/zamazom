@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import jwtDecode from 'jwt-decode';
 import { API_URL } from '../api';
+import toast from 'react-hot-toast';
 
 export const register = createAsyncThunk('api/register', async (data, { rejectWithValue }) => {
   try {
@@ -32,6 +33,7 @@ const authSlice = createSlice({
     _id: '',
     token: localStorage.getItem('token') || null,
     status: null,
+    createdAt: null,
   },
   reducers: {
     authUser(state, action) {
@@ -49,6 +51,7 @@ const authSlice = createSlice({
           loading: false,
           status: 'success',
           isAuthenticated: true,
+          createdAt: user.createdAt,
         };
       }
     },
@@ -61,8 +64,9 @@ const authSlice = createSlice({
         name: '',
         email: '',
         _id: '',
-        status: 'null',
+        status: null,
         isAuthenticated: false,
+        createdAt: null,
       };
     },
   },
@@ -74,12 +78,24 @@ const authSlice = createSlice({
       if (action.payload) {
         const user = jwtDecode(action.payload);
 
+        toast.success(`Yes! Welcome, ${user.name}!`, {
+          duration: 5000,
+          position: 'top-right',
+          style: {
+            minWidth: 210,
+            minHeight: 65,
+            boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.4)',
+            fontSize: 17,
+          },
+        });
+
         return {
           ...state,
           token: action.payload,
           name: user.name,
           email: user.email,
           _id: user.id,
+          createdAt: user.createdAt,
           loading: false,
           status: 'success',
           isAuthenticated: true,
@@ -97,11 +113,23 @@ const authSlice = createSlice({
       if (action.payload) {
         const user = jwtDecode(action.payload);
 
+        toast.success(`Welcome back, ${user.name}!`, {
+          duration: 5000,
+          position: 'top-right',
+          style: {
+            minWidth: 210,
+            minHeight: 65,
+            boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.4)',
+            fontSize: 17,
+          },
+        });
+
         return {
           ...state,
           token: action.payload,
           name: user.name,
           email: user.email,
+          createdAt: null,
           _id: user.id,
           loading: false,
           status: 'success',
