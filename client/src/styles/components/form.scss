@@ -1,0 +1,59 @@
+.form {
+  width: calc(50%);
+  padding: 2rem 3rem;
+
+  @include breakpoint(md) {
+    padding: 2rem 1rem;
+  }
+
+  @include breakpoint(sm) {
+    width: 100%;
+  }
+
+  @include breakpoint(xs) {
+    padding: 2rem 0;
+  }
+
+  &__content {
+    &__text {
+      font-size: 1.5rem;
+      line-height: 1.25;
+      color: rgb(21, 52, 87);
+    }
+  }
+
+  &__register {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-top: 1rem;
+    line-height: 1.25;
+    font-size: 0.8rem;
+
+    &__text {
+      margin-right: 0.25rem;
+      color: rgb(163, 159, 159);
+    }
+
+    &__anchor {
+      font-weight: 700;
+      color: #0071dc;
+    }
+  }
+
+  &__error {
+    min-height: 1rem;
+    margin-block: 1rem;
+
+    & > h4 {
+      color: red;
+      font-size: 12px;
+    }
+  }
+
+  &__btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
