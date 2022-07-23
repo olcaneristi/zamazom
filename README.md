@@ -3,11 +3,7 @@
 </div>
 
 <p align="center">
- That was a hobby project for someone trying to learn Redux Toolkit and MERN stack deeply. I learned a lot things while doing it and had a lot of fun (LOL, actually I hate it cause of bugs). I think I've learned many things about MERN stack and RTK Query. 
-</p>
-
-<p align="center">
-  Hosted with <a href="https://vercel.com/" target="_blank">Vercel</a>
+ That was a hobby project for someone trying to learn Redux Toolkit and MERN stack deeply. I learned a lot things while doing it and had a lot of fun (LOL, actually I hate it cause of bugs). This project includes basic functionalities like storage data with Local Storage, auth with JWT, add-to-cart/favorite with Redux-Toolkit, data-fetching with RTK Query.  
 </p>
 
 <p align="center">
@@ -15,9 +11,17 @@
   <img src="https://camo.githubusercontent.com/c687724720de8b1cda17417d380b20a5cb493c5eb8e7bf3597e26cdcf665d52a/68747470733a2f2f696d672e736869656c64732e696f2f6769746875622f6c6963656e73652f444156466f756e646174696f6e2f6361707461696e2d6e336d302e7376673f7374796c653d666c61742d737175617265" alt="License"/></a>
 </p>
 
+<p align="center">
+  Hosted with <a href="https://vercel.com/" target="_blank">Vercel</a>
+</p>
+
+<br/>
+
 <h3 align="center">
  <a href="https://mern-ecommerce-liart.vercel.app/" target="_blank"> Demo </a> 🚀
 </h3>
+
+<br/>
 
 <!-- ## 📷 Screenshots and Demo GIF
 
@@ -92,7 +96,7 @@ nodemon ## for backend
 
 This project uses MongoDB Cloud as database service and JSON Web Tokens for auth.
 
-Create .env files inside server/ and enter the necessary variables (JWT secret key or MongoDB Cloud URI)
+Create .env file inside server/ and enter the necessary variables (JWT secret key and MongoDB Cloud URI)
 
 ```bash
 
