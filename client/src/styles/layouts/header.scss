@@ -1,9 +1,13 @@
 .header {
   padding-inline: 1rem;
   background-color: #0071dc;
-  //position: sticky;
-  //top: 0;
-  z-index: 99;
+
+  @include breakpoint(xs) {
+    padding-block: 0.92rem;
+    position: sticky;
+    top: 0;
+    z-index: 999999;
+  }
 
   &__container {
     display: flex;
@@ -12,20 +16,68 @@
     max-width: $container-max-width + 60px !important;
   }
 
+  &__elements {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    @include breakpoint(xs) {
+      flex-direction: row-reverse;
+    }
+  }
+
   &__nav {
     display: flex;
     align-items: center;
     padding-block: 0.75rem;
 
+    @include breakpoint(xs) {
+      background: rgba(9, 20, 34, 0.95);
+      display: flex;
+      position: absolute;
+      top: 0;
+      right: -100%;
+      visibility: hidden;
+      transition: 800ms ease-in-out;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+      border-bottom-left-radius: 0.5rem;
+      padding: 0.7rem;
+      width: 220px;
+
+      &.active {
+        right: 0;
+        transition: 800ms ease-in-out;
+        visibility: visible;
+      }
+    }
+
     & > a {
       margin-inline: 0.5rem;
 
-      &:nth-last-child(1) {
-        margin-right: 0;
-      }
-
       &:nth-child(1) {
         margin-left: 0;
+      }
+    }
+  }
+
+  &__nav__container {
+    position: fixed;
+    top: 70px;
+    left: 0;
+    right: 0;
+    transition: all 300ms ease-in-out;
+    &.active {
+      @include breakpoint(xs) {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 2;
+        background-color: rgba(9, 20, 34, 0.4);
       }
     }
   }
@@ -47,9 +99,18 @@
     color: #fff;
     display: flex;
     align-items: center;
+    text-align: left;
     justify-content: center;
     padding: 7px 10px;
     transition: background 0.15s ease-in-out;
+
+    @include breakpoint(xs) {
+      width: 100%;
+      margin-inline: 0 !important;
+      padding: 0.5rem 1rem;
+      justify-content: flex-start;
+      margin-bottom: 0.5rem;
+    }
 
     &:hover {
       background-color: #18509b;
@@ -69,7 +130,14 @@
     align-items: center;
     padding: 7px 10px;
     border-radius: 8px;
+    text-align: left;
     transition: background 0.15s ease-in-out;
+
+    @include breakpoint(xs) {
+      width: 100%;
+      padding: 0.5rem 1rem;
+      margin-inline: 0 !important;
+    }
 
     &:hover {
       background-color: #18509b;
@@ -86,6 +154,7 @@
   }
 
   &__cart {
+    margin-left: 1rem;
     display: flex;
     width: 50px;
     flex-direction: column;
@@ -95,6 +164,10 @@
     position: relative;
     border-radius: 5px;
     color: #fff;
+
+    @include breakpoint(xs) {
+      margin-left: 0;
+    }
 
     &__count {
       position: absolute;
@@ -119,6 +192,30 @@
       font-size: 0.67rem;
       line-height: 1.25;
       opacity: 0.8;
+    }
+  }
+
+  &__sidebar {
+    display: none;
+
+    &__toggle {
+      cursor: pointer;
+
+      & > svg {
+        display: flex;
+      }
+    }
+
+    @include breakpoint(xs) {
+      padding-left: 1rem;
+      display: flex;
+      outline: none;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 2em;
+      animation: items 1.2s ease;
+      cursor: pointer;
     }
   }
 }
