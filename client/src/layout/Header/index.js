@@ -16,7 +16,7 @@ const Header = () => {
     <header className="header">
       <div className="container header__container">
         <div className="header__logo">
-          <Link to="/">
+          <Link to="/" onClick={() => setIsOpen(false)}>
             <Logo width="150" />
           </Link>
         </div>

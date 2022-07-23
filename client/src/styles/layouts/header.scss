@@ -35,7 +35,7 @@
       background: rgba(9, 20, 34, 0.95);
       display: flex;
       position: absolute;
-      top: 0;
+      top: 69px;
       right: -100%;
       visibility: hidden;
       transition: 800ms ease-in-out;
@@ -63,11 +63,6 @@
   }
 
   &__nav__container {
-    position: fixed;
-    top: 70px;
-    left: 0;
-    right: 0;
-    transition: all 300ms ease-in-out;
     &.active {
       @include breakpoint(xs) {
         position: fixed;
@@ -76,7 +71,7 @@
         bottom: 0;
         width: 100%;
         height: 100%;
-        z-index: 2;
+        z-index: -1;
         background-color: rgba(9, 20, 34, 0.4);
       }
     }
