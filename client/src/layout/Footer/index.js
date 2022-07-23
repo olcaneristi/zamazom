@@ -11,7 +11,7 @@ const Footer = () => {
         <div className="footer__social">
           <a
             className="footer__social__item"
-            href="https://github.com/olcaneristi"
+            href="https://github.com/olcaneristi/zamazom"
             target="_blank"
             rel="noopener noreferrer"
           >
