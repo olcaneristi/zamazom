@@ -1,10 +1,18 @@
+import { AnimatedPage, NoData } from 'components';
 import React from 'react';
+import notFound from 'assets/lotties/not-found.json';
 
 const NotFound = () => {
   return (
-    <section className="not__found">
-      <div className="container not__found__container">404 Not Found</div>
-    </section>
+    <AnimatedPage className="not__found">
+      <div className="container not__found__container">
+        <NoData
+          animation={notFound}
+          title="Whoops! Looks like you are lost!"
+          description="We're sorry, the page you requested could not be found."
+        />
+      </div>
+    </AnimatedPage>
   );
 };
 
