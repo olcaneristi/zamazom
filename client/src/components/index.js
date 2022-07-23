@@ -5,7 +5,7 @@ import Input from './Input';
 import Loader from './Loader';
 import Modal from './Modal';
 import Navbar from './Navbar';
-import NoData from './NoData';
+import InfoContainer from './InfoContainer';
 import Pagination from './Pagination';
 import ProductCard from './ProductCard';
 
@@ -17,7 +17,7 @@ export {
   Loader,
   Modal,
   Navbar,
-  NoData,
+  InfoContainer,
   Pagination,
   ProductCard,
 };

@@ -4,7 +4,7 @@ import { IconReturn, IconReload } from 'assets/icons';
 import { Link } from 'react-router-dom';
 import Button from 'components/Button';
 
-const NoData = ({
+const InfoContainer = ({
   title,
   description,
   animation,
@@ -13,6 +13,7 @@ const NoData = ({
   reload,
   reloadRequest,
   reloadText,
+  children,
 }) => {
   const defaultOptions = {
     loop: true,
@@ -28,6 +29,7 @@ const NoData = ({
       <Lottie isClickToPauseDisabled={true} options={defaultOptions} style={{ maxWidth: 350 }} />
       <h2 className="empty__item__title">{title}</h2>
       <p className="empty__item__description">{description}</p>
+      {children}
       {(reload && (
         <Button buttonType="outline" onClick={reloadRequest} className="empty__item__return">
           {reloadText}
@@ -47,4 +49,4 @@ const NoData = ({
   );
 };
 
-export default NoData;
+export default InfoContainer;

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useGetAllProductsQuery } from 'services/api/productsApi';
-import { Loader, NoData, Pagination, ProductCard } from 'components';
+import { Loader, InfoContainer, Pagination, ProductCard } from 'components';
 import fetchError from 'assets/lotties/fetch-error.json';
 
 const Home = () => {
@@ -13,7 +13,7 @@ const Home = () => {
     };
     return (
       <div className="error">
-        <NoData
+        <InfoContainer
           animation={fetchError}
           title={error.error}
           reload

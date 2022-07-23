@@ -1,4 +1,4 @@
-import { AnimatedPage, NoData, ProductCard } from 'components';
+import { AnimatedPage, InfoContainer, ProductCard } from 'components';
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import noFavoritesData from 'assets/lotties/no-favorites-found.json';
@@ -16,7 +16,7 @@ const Favorites = () => {
     <AnimatedPage className={`favorites ${favoritesData.length === 0 ? 'empty' : ''}`}>
       <div className="container">
         {favoritesData.length === 0 ? (
-          <NoData
+          <InfoContainer
             animation={noFavoritesData}
             title="Your favorites are currently empty."
             description="Looks like you haven't liked any product yet.."
