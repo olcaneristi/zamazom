@@ -1,7 +1,9 @@
+import { IconCover } from 'assets/icons';
 import { AnimatedPage, Button, Input } from 'components';
 import React, { useState } from 'react';
+import { Oval } from 'react-loader-spinner';
 import { useDispatch, useSelector } from 'react-redux';
-import { Navigate, useLocation } from 'react-router-dom';
+import { Link, Navigate, useLocation } from 'react-router-dom';
 import { register } from 'services/slices/authSlice';
 
 const Register = () => {
@@ -27,40 +29,59 @@ const Register = () => {
   return isAuthenticated ? (
     <Navigate to={previousPath} />
   ) : (
-    <AnimatedPage style={{ minHeight: '90vh' }}>
-      {status === 'error' && <p>{error}</p>}
+    <section className="register">
+      <AnimatedPage className="container register__container">
+        <div className="register__cover">
+          <IconCover width="300" height="450" />
+        </div>
+        <div className="form">
+          <div className="form__content">
+            <h3 className="form__content__text">Sign up to Zamazom.</h3>
+          </div>
 
-      <h1>Register</h1>
-      <form onSubmit={handleSubmit}>
-        <Input
-          onChange={handleChange}
-          name="name"
-          type="text"
-          value={user.name}
-          placeholder="Name"
-          labelText="Name"
-        />
-        <Input
-          name="email"
-          type="email"
-          value={user.email}
-          placeholder="Email"
-          onChange={handleChange}
-          labelText="Email"
-        />
-        <Input
-          name="password"
-          type="password"
-          value={user.password}
-          placeholder="Password"
-          onChange={handleChange}
-          labelText="Password"
-        />
-        <Button type="submit" disabled={!(user.name && user.email && user.password)}>
-          {status === 'loading' ? 'Registering...' : 'Register'}
-        </Button>
-      </form>
-    </AnimatedPage>
+          <div className="form__error">{error && <h4>{error}</h4>}</div>
+
+          <form onSubmit={handleSubmit}>
+            <Input
+              onChange={handleChange}
+              name="name"
+              type="text"
+              value={user.name}
+              placeholder="Name"
+              labelText="Name"
+            />
+            <Input
+              name="email"
+              value={user.email}
+              type="email"
+              onChange={handleChange}
+              placeholder="Email"
+            />
+            <Input
+              name="password"
+              value={user.password}
+              type="password"
+              onChange={handleChange}
+              placeholder="Password"
+            />
+            <Button
+              type="submit"
+              disabled={!(user.name && user.email && user.password)}
+              className="form__btn"
+            >
+              {status === 'loading' ? <Oval color="#FFF" width={24} height={24} /> : 'Sign Up'}
+            </Button>
+          </form>
+
+          <div className="form__register">
+            <p className="form__register__text">Already a member?</p>
+            <Link to="/login" className="form__register__anchor">
+              Sign In
+            </Link>
+          </div>
+        </div>
+      </AnimatedPage>
+    </section>
   );
 };
 
