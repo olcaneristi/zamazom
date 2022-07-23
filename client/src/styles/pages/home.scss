@@ -175,7 +175,7 @@
       }
 
       &-btn {
-        padding: 0.9rem 1rem;
+        min-height: 2.5rem;
       }
     }
 
@@ -243,32 +243,9 @@
         &--btn {
           color: white;
           width: fit-content;
+          padding-inline: 0.5rem;
         }
       }
-    }
-  }
-
-  &__pagination {
-    &__items {
-      margin-block: 1rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    &__btn {
-      margin: 0.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 1rem;
-      padding: 0.6rem;
-    }
-
-    &__arrow {
-      padding: 0.5rem;
-      font-size: 1.4rem;
-      cursor: pointer;
     }
   }
 }

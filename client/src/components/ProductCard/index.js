@@ -11,6 +11,7 @@ import useWindowSize from 'hooks/useWindowSize';
 import Button from '../Button';
 import { IconRemoveFavorites } from 'assets/icons';
 import { removeFromFavorites } from 'services/slices/favoriteSlice';
+import Loader from 'components/Loader';
 
 const ProductCard = ({ data }) => {
   const [isShown, setIsShown] = useState(false);
@@ -25,7 +26,11 @@ const ProductCard = ({ data }) => {
   };
 
   const handleFavoritesCheck = data => {
-    dispatch(removeFromFavorites(data));
+    setIsSubmitLoading(true);
+    setTimeout(() => {
+      dispatch(removeFromFavorites(data));
+      setIsSubmitLoading(false);
+    }, 500);
   };
 
   useEffect(() => {
@@ -122,6 +127,7 @@ const ProductCard = ({ data }) => {
 
   return (
     <li className="home__product" onMouseEnter={handleEnterMouse} onMouseLeave={handleLeaveMouse}>
+      {!data?.variantList && isSubmitLoading && <Loader haveBackground />}
       {!data?.variantList && (
         <Button
           className="details__btn--add-favorites favorites__btn"
