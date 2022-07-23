@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { getCartTotal } from 'services/slices/cartSlice';
-import { AnimatedPage, Loader, Button, NoData } from 'components';
+import { clearCart, getCartTotal } from 'services/slices/cartSlice';
+import { AnimatedPage, Loader, Button, InfoContainer } from 'components';
 import CartItem from 'components/CartItem';
 import animationData from 'assets/lotties/shake-a-empty-box';
+import { generateReduxUniqueId } from 'utils';
 
 const Cart = () => {
   const { cartItems, cartTotalAmount, cartTotalTaxes } = useSelector(state => state.cart);
@@ -22,7 +23,14 @@ const Cart = () => {
     setIsSubmitLoading(true);
     if (isAuthenticated) {
       setTimeout(() => {
+        navigate(`/checkout/${generateReduxUniqueId()}`, {
+          state: {
+            items: cartItems,
+            totalAmount: cartTotalAmount + cartTotalTaxes,
+          },
+        });
         setIsSubmitLoading(false);
+        dispatch(clearCart());
       }, 2000);
     } else {
       setIsSubmitLoading(false);
@@ -52,7 +60,7 @@ const Cart = () => {
         {isSubmitLoading && <Loader haveBackground width={50} />}
 
         {(cartItems.length === 0 && (
-          <NoData
+          <InfoContainer
             animation={animationData}
             title="Your cart is currently empty!"
             description="Looks like you haven't made your choice yet.."
