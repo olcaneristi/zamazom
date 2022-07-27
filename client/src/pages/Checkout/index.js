@@ -39,7 +39,7 @@ const Checkout = () => {
                     <Link to={`/products/${item.slug}`}>
                       <picture>
                         <source srcSet={item?.coverImage} type="image/webp" />
-                        <img src={item.coverImage} alt={item.name} />
+                        <img src={item.coverImage} alt={item.name} loading="lazy" />
                       </picture>
                     </Link>
                   </div>

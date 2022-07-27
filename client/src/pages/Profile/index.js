@@ -36,7 +36,7 @@ const Profile = () => {
 
         <div className="profile__content">
           <div className="profile__avatar">
-            <img src="https://i.pravatar.cc/120?img" alt="avatar" />
+            <img src="https://i.pravatar.cc/120?img" alt="avatar" loading="lazy" />
           </div>
 
           <div className="profile__info">

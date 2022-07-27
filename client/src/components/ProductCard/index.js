@@ -95,7 +95,13 @@ const ProductCard = ({ data }) => {
                   >
                     <picture>
                       <source srcSet={data?.coverImage} type="image/webp" />
-                      <img src={data?.coverImage} alt={data.name} width="80px" height="80px" />
+                      <img
+                        src={data?.coverImage}
+                        alt={data.name}
+                        width="80px"
+                        height="80px"
+                        loading="lazy"
+                      />
                     </picture>
                   </Button>
                   <p className="home__product__variant__color">{item.color.name}</p>
@@ -140,7 +146,7 @@ const ProductCard = ({ data }) => {
         <div className="home__product__img">
           <picture>
             <source srcSet={data?.coverImage} type="image/webp" />
-            <img src={data?.coverImage} alt={data?.name} />
+            <img src={data?.coverImage} alt={data?.name} loading="lazy" />
           </picture>
         </div>
         <div className="home__product__content">

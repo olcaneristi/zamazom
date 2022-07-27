@@ -146,7 +146,7 @@ const ItemDetails = () => {
                 <SwiperSlide key={index}>
                   <picture>
                     <source srcSet={image} type="image/webp" />
-                    <img src={image} alt={item?.name} />
+                    <img src={image} alt={item?.name} loading="lazy" />
                   </picture>
                 </SwiperSlide>
               ))}
@@ -245,7 +245,7 @@ const ItemDetails = () => {
                   >
                     <picture>
                       <source srcSet={variant.coverImage} type="image/webp" />
-                      <img src={variant.coverImage} alt={variant.name} width="50" />
+                      <img src={variant.coverImage} alt={variant.name} width="50" loading="lazy" />
                     </picture>
                   </Button>
                   <p className="home__product__variant__color">{variant.color.name}</p>
@@ -367,6 +367,7 @@ const ItemDetails = () => {
                           src={`https://i.pravatar.cc/300?img${index}`}
                           alt="user"
                           className="details__reviews__review__user__img"
+                          loading="lazy"
                         />
                       </picture>
 
